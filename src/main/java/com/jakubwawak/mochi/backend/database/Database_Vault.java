@@ -8,8 +8,11 @@ package com.jakubwawak.mochi.backend.database;
 import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.enitity.Vault;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.InsertOneResult;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 /**
@@ -38,7 +41,7 @@ public class Database_Vault {
             InsertOneResult result = mochiCollection.insertOne(vault.prepareDocument());
             if ( result.wasAcknowledged() ){
                 database.log("VAULT-INSERT","Created new vault ("+vault.vault_name+")");
-                return vault;
+                return getVault(vault.vault_hash,vault.vault_code);
             }
             database.log("VAULT-INSERT-FAILED","Failed to insert new vault, result was not acknowledged!");
             return null;
@@ -90,6 +93,7 @@ public class Database_Vault {
             MongoCollection<Document> mochiCollection = database.get_data_collection("mochi_vault");
             Document vault_document = mochiCollection.find(new Document("_id",vault_id)).first();
             if ( vault_document != null ){
+                vault = new Vault(vault_document);
                 return vault;
             }
             MochiApplication.notificationService("Cannot find vault with given ID!",3);
@@ -107,6 +111,37 @@ public class Database_Vault {
      * @return Vault
      */
     public Vault updateVault(Vault vaultToUpdate){
-        //TODO
+        try{
+            MongoCollection<Document> mochiCollection = database.get_data_collection("mochi_vault");
+            Document vault_document = mochiCollection.find(new Document("_id",vaultToUpdate.vault_id)).first();
+            if ( vault_document != null ){
+                vaultToUpdate.addLog("Database update!");
+                Bson updates = Updates.combine(
+                        Updates.set("vault_name",vaultToUpdate.vault_name),
+                        Updates.set("vault_hash",vaultToUpdate.vault_hash),
+                        Updates.set("vault_code",vaultToUpdate.vault_code),
+                        Updates.set("vault_recovery_key",vaultToUpdate.vault_recovery_key),
+                        Updates.set("vault_log",vaultToUpdate.vault_log),
+                        Updates.set("vault_notes_list",vaultToUpdate.vault_notes_list)
+                        );
+                UpdateResult result = mochiCollection.updateOne(vault_document,updates);
+                if ( result.getModifiedCount() >= 1 ){
+                    MochiApplication.database.log("VAULT-UPDATE","Updated vault ("+vaultToUpdate.vault_id.toString()+")");
+                    MochiApplication.notificationService("Updated vault "+vaultToUpdate.vault_id.toString(),2);
+                    return getVault(vaultToUpdate.vault_id);
+                }
+                else{
+                    MochiApplication.database.log("VAULT-UPDATE","Nothing to update on vault ("+vaultToUpdate.vault_id.toString()+")");
+                    return vaultToUpdate;
+                }
+            }
+            else{
+                MochiApplication.database.log("VAULT-UPDATE","Cannot find vault on database with ID ("+vaultToUpdate.vault_id.toString()+")");
+                return null;
+            }
+        }catch(Exception ex){
+            MochiApplication.database.log("VAULT-UPDATE-FAILED","Failed to update vault ("+ex.toString()+")");
+            return null;
+        }
     }
 }

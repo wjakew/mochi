@@ -6,6 +6,7 @@
 package com.jakubwawak.mochi;
 
 import com.jakubwawak.mochi.backend.database.Database_Connector;
+import com.jakubwawak.mochi.backend.database.Database_Vault;
 import com.jakubwawak.mochi.enitity.Mochi;
 import com.jakubwawak.mochi.enitity.Vault;
 import com.jakubwawak.mochi.maintanance.ConsoleColors;
@@ -99,6 +100,31 @@ public class MochiApplication implements AppShellConfigurator {
 					break;
 			}
 		}catch(Exception ex){}
+	}
+
+	/**
+	 * Function for updating vault on database
+	 */
+	public static void vaultUpdateService(){
+		try{
+			Database_Vault dv = new Database_Vault(database);
+			dv.updateVault(currentVault);
+		}catch(Exception ex){
+			notificationService("Failed to update vault on database ("+ex.toString()+")",4);
+		}
+	}
+
+	/**
+	 * Function for updating vault on database
+	 * @param vault
+	 */
+	public static void vaultUpdateService(Vault vault){
+		try{
+			Database_Vault dv = new Database_Vault(database);
+			dv.updateVault(vault);
+		}catch(Exception ex){
+			notificationService("Failed to update vault on database ("+ex.toString()+")",4);
+		}
 	}
 
 }

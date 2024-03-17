@@ -93,7 +93,7 @@ public class Database_Connector {
      */
     public int insertLog(MochiLog applicationLog){
         try{
-            MongoCollection<Document> log_collection = get_data_collection("aim_applog");
+            MongoCollection<Document> log_collection = get_data_collection("mochi_applog");
             log_collection.insertOne(applicationLog.prepareDocument());
             return 1;
         }catch(Exception ex){

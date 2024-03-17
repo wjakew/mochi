@@ -7,6 +7,7 @@ package com.jakubwawak.mochi.frontend.windows;
 
 import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.backend.datamanager.VaultManager;
+import com.jakubwawak.mochi.enitity.Mochi;
 import com.jakubwawak.mochi.enitity.Vault;
 import com.jakubwawak.mochi.maintanance.RandomString;
 import com.vaadin.flow.component.ClickEvent;
@@ -19,6 +20,8 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
+
+import java.io.File;
 
 /**
  * Window for logging user to the app
@@ -92,6 +95,15 @@ public class CreateVaultWindow {
             Vault vault = vm.createVault(vaultString_field.getValue(),vaultName_field.getValue(),vaultCode_field.getValue());
             if ( vault != null ){
                 MochiApplication.notificationService("Vault ("+vault.vault_name+") created!",1);
+                String mkeyFilePath = vm.createVaultmKey(vault.vault_id);
+                File file = new File(mkeyFilePath);
+                DownloadMkeyWindow dmw = new DownloadMkeyWindow(file,vault);
+                main_layout.add(dmw.dialog);
+                dmw.dialog.open();
+                main_dialog.close();
+            }
+            else{
+                MochiApplication.notificationService("Failed to create vault! Check application log.",4);
             }
         }
         else{

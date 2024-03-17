@@ -41,6 +41,7 @@ public class MKey {
             File file = new File(fileName);
             if ( file.exists() ){
                 vault.addLog("Created mkey file for vault!");
+                MochiApplication.vaultUpdateService(vault);
                 return file.getAbsolutePath();
             }
             return null;

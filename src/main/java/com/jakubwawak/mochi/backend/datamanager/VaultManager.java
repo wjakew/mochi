@@ -8,6 +8,7 @@ package com.jakubwawak.mochi.backend.datamanager;
 import com.jakubwawak.mochi.backend.database.Database_Connector;
 import com.jakubwawak.mochi.backend.database.Database_Vault;
 import com.jakubwawak.mochi.enitity.Vault;
+import com.jakubwawak.mochi.maintanance.MKey;
 import org.bson.types.ObjectId;
 
 /**
@@ -47,6 +48,7 @@ public class VaultManager {
      */
     public String createVaultmKey(ObjectId vault_id){
         Vault vault = dv.getVault(vault_id);
-
+        MKey mkey = new MKey(vault);
+        return mkey.createFile();
     }
 }
