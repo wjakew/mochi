@@ -1,0 +1,26 @@
+Table mochi {
+  database_lastupdate timestamp
+  application_owner text
+  api_enabled int
+  vaultcreation_enabled int
+  visual_mode int
+}
+
+Table vault {
+  vault_id ObjectId [primary key]
+  vault_name text
+  vault_creation_time timestamp
+  vault_hash text
+  vault_code text
+  vault_log List
+  vault_notes_list List
+}
+
+Table note {
+  note_id ObjectId [primary key]
+  note_name text
+  note_tags text
+  note_creationtime timestamp
+  note_log List
+  note_raw text
+}

@@ -1,0 +1,87 @@
+.openvaultview{
+    background: linear-gradient(-45deg, #A91267, #2A2634, #72394D, #DAD096);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+    font-family: Monospace;
+    color: black;
+}
+.createvaultwindow{
+    background: linear-gradient(-45deg, #eeaeca,#94bbe9);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    font-family: Monospace;
+    color: white;
+    overflow: visible;
+    border-radius:10px;
+    width: 100vw;
+}
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+.openvaultview-upload{
+    --lumo-primary-color:black;
+    font-family: Monospace;
+    color: black;
+}
+.mochi-button-bright{
+    background: linear-gradient(-45deg, #2A2634, #DAD096);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    font-family: Monospace;
+    border-radius: 25px;
+    color: black;
+}
+.mochi-button-dark{
+    background: linear-gradient(-45deg, #000000, #FFFFFF);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    font-family: Monospace;
+    border-radius: 25px;
+    color: black;
+}
+.mochi-button-transparent{
+    --lumo-primary-color:white;
+    background-color: transparent;
+    color: white;
+    font-family: Monospace;
+}
+.mochi-input-field{
+    --lumo-primary-color:white;
+    background-color: transparent;
+    color: white;
+    font-family: Monospace;
+    --vaadin-input-field-value-color: white;
+    --vaadin-input-field-label-color: white;
+    --vaadin-input-field-focused-label-color: purple;
+}
+
+.mochi-dialog-window::part(overlay) {
+    background: linear-gradient(-45deg, #A91267, #2A2634, #72394D, #DAD096);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    font-family: Monospace;
+    color: white;
+}
+.openvaultview-rightlayout{
+    background: linear-gradient(-45deg, #A91267, #2A2634, #72394D, #DAD096);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+    font-family: Monospace;
+    color: white;
+    border-radius: 25px;
+    font-size: 3rem;
+    margin: 25px;
+}
+.openvaultview-leftlayout{
+    font-size: 5rem;
+}
