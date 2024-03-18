@@ -7,6 +7,7 @@ package com.jakubwawak.mochi.frontend.views;
 
 import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.frontend.windows.CreateVaultWindow;
+import com.jakubwawak.mochi.frontend.windows.VaultPasswordWindow;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -32,6 +33,7 @@ import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.theme.lumo.Lumo;
 
 import java.io.InputStream;
+import java.util.Scanner;
 
 /**
  * Main application web view
@@ -75,7 +77,8 @@ public class OpenVaultView extends VerticalLayout {
         Span dropLabel = new Span("");
         Icon dropIcon = VaadinIcon.KEY.create();
 
-        keyUploadComponent = new Upload();
+        memoryBuffer = new MemoryBuffer();
+        keyUploadComponent = new Upload(memoryBuffer);
         keyUploadComponent.setUploadButton(upload_button);
         keyUploadComponent.setDropLabel(dropLabel);
         keyUploadComponent.setDropLabelIcon(dropIcon);
@@ -88,14 +91,24 @@ public class OpenVaultView extends VerticalLayout {
 
         keyUploadComponent.addSucceededListener(event -> {
             // Get information about the uploaded file
-            InputStream fileData = memoryBuffer.getInputStream();
-            String fileName = event.getFileName();
-            long contentLength = event.getContentLength();
-            String mimeType = event.getMIMEType();
+            try{
+                InputStream fileData = memoryBuffer.getInputStream();
+                String fileName = event.getFileName();
+                long contentLength = event.getContentLength();
+                String mimeType = event.getMIMEType();
 
-            // Do something with the file data
-            // processFile(fileData, fileName, contentLength, mimeType);
-            // TODO
+                // Do something with the file data
+                // processFile(fileData, fileName, contentLength, mimeType);
+                Scanner s = new Scanner(fileData).useDelimiter("\\A");
+                String vault_hash = s.hasNext() ? s.next() : "";
+
+                VaultPasswordWindow vpw = new VaultPasswordWindow(vault_hash);
+                add(vpw.main_dialog);
+                vpw.main_dialog.open();
+                keyUploadComponent.clearFileList();
+            }catch(Exception ex){
+                MochiApplication.notificationService("Failed: "+ex.toString(),4);
+            }
         });
 
         keyUploadComponent.addFileRejectedListener(event -> {

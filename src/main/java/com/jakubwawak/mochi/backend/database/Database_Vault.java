@@ -106,6 +106,29 @@ public class Database_Vault {
     }
 
     /**
+     * Functionf for getting vault from database
+     * @param vault_hash
+     * @return Vault
+     */
+    public Vault getVault(String vault_hash){
+        Vault vault = null;
+        try{
+            MongoCollection<Document> mochiCollection = database.get_data_collection("mochi_vault");
+            Document vault_document = mochiCollection.find(new Document("vault_hash",vault_hash)).first();
+            if ( vault_document != null ){
+                vault = new Vault(vault_document);
+                return vault;
+            }
+            MochiApplication.notificationService("Cannot find vault with given hash!",3);
+            return null;
+        }
+        catch(Exception ex){
+            MochiApplication.database.log("GET-VAULT-FAILED","Failed to get vault ("+ex.toString()+")");
+            return null;
+        }
+    }
+
+    /**
      * Function for updating vault object on database
      * @param vaultToUpdate
      * @return Vault
