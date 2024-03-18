@@ -6,6 +6,7 @@
 package com.jakubwawak.mochi.backend.database;
 
 import com.jakubwawak.mochi.MochiApplication;
+import com.jakubwawak.mochi.enitity.Note;
 import com.jakubwawak.mochi.enitity.Vault;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Updates;
@@ -14,6 +15,8 @@ import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
+
+import java.util.ArrayList;
 
 /**
  * Object for maintaining vault data on database

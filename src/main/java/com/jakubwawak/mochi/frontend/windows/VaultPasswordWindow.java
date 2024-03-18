@@ -102,7 +102,10 @@ public class VaultPasswordWindow {
             if ( openedVault.vault_code.equals(password_field.getValue()) ){
                 MochiApplication.notificationService("Vault "+openedVault.vault_name+" opened!",1);
                 main_dialog.close();
-                //TODO
+                MochiApplication.currentVault = openedVault;
+                // -> move to home screen
+                openVault_button.getUI().ifPresent(ui ->
+                        ui.navigate("/vault"));
             }
             else{
                 MochiApplication.notificationService("Wrong password!",4);

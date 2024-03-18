@@ -69,4 +69,12 @@ public class Note {
         document.append("note_code",note_code);
         return document;
     }
+
+    /**
+     * Function for adding log to note object
+     * @param log
+     */
+    public void addLog(String log){
+        note_log.add(LocalDateTime.now().toString()+" - "+log);
+    }
 }

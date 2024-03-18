@@ -25,7 +25,8 @@ public class Vault {
     public String vault_hash;                // hash for connecting to vault in database
     public String vault_code;                // code for entering to vault using with vault_hash stored in .mkey file
     public List<String> vault_log;
-    public List<String> vault_notes_list;
+    public List<ObjectId> vault_notes_list;
+    public ArrayList<Note> vault_notes_objects;
 
     /**
      * Constructor
@@ -40,7 +41,7 @@ public class Vault {
         this.vault_recovery_key = rs.nextString();
         this.vault_log = new ArrayList<>();
         this.vault_notes_list = new ArrayList<>();
-
+        this.vault_notes_objects = new ArrayList<>();
         addLog("Created vault");
     }
 
@@ -55,7 +56,7 @@ public class Vault {
         this.vault_hash = document.getString("vault_hash");
         this.vault_code = document.getString("vault_code");
         this.vault_log = document.getList("vault_log",String.class);
-        this.vault_notes_list = document.getList("vault_notes_list",String.class);
+        this.vault_notes_list = document.getList("vault_notes_list",ObjectId.class);
         this.vault_recovery_key = document.getString("vault_recovery_key");
     }
 
@@ -82,4 +83,10 @@ public class Vault {
     public void addLog(String log){
         vault_log.add(LocalDateTime.now().toString()+" - "+log);
     }
+
+    /**
+     * Function for adding note
+     * @param note
+     */
+    public void addNote(Note note){vault_notes_list.add(note.note_id);}
 }

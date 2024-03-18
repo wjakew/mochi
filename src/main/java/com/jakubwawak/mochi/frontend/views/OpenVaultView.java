@@ -45,7 +45,7 @@ public class OpenVaultView extends VerticalLayout {
 
     Upload keyUploadComponent;
     Button upload_button;
-    Button openVault_button, createVault_button;
+    Button createVault_button;
 
     MemoryBuffer memoryBuffer;
     HorizontalLayout mainLayout;
@@ -118,12 +118,8 @@ public class OpenVaultView extends VerticalLayout {
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
         });
 
-        openVault_button = new Button("Open Vault",VaadinIcon.KEY.create());
-        openVault_button.setWidthFull();
-        openVault_button.addClassName("mochi-button-bright");
-
-        createVault_button = new Button("Create...",VaadinIcon.LOCK.create(),this::setCreateVault_button);
-        createVault_button.setWidth("50%");createVault_button.addThemeVariants(ButtonVariant.LUMO_CONTRAST,ButtonVariant.LUMO_PRIMARY);
+        createVault_button = new Button("Create new Vault",VaadinIcon.SAFE.create(),this::setCreateVault_button);
+        createVault_button.setWidth("90%");createVault_button.addThemeVariants(ButtonVariant.LUMO_CONTRAST,ButtonVariant.LUMO_PRIMARY);
         createVault_button.addClassName("mochi-button-dark");
 
         mainLayout = new HorizontalLayout();
@@ -148,7 +144,6 @@ public class OpenVaultView extends VerticalLayout {
         rightLayout.add(VaadinIcon.LOCK.create());
         rightLayout.add(new H6("OPEN YOUT VAULT"));
         rightLayout.add(keyUploadComponent);
-        rightLayout.add(openVault_button);
         rightLayout.add(createVault_button);
 
         leftLayout.add(logo);

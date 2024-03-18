@@ -48,6 +48,16 @@
     border-radius: 25px;
     color: black;
 }
+.mochi-header{
+    background: linear-gradient(-45deg, #eeaeca,#94bbe9);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    font-family: Monospace;
+    color: white;
+    overflow: visible;
+    border-radius:10px;
+    --vaadin-input-field-focused-label-color: purple;
+}
 .mochi-button-transparent{
     --lumo-primary-color:white;
     background-color: transparent;
@@ -61,6 +71,14 @@
     font-family: Monospace;
     --vaadin-input-field-value-color: white;
     --vaadin-input-field-label-color: white;
+    --vaadin-input-field-focused-label-color: purple;
+}
+.mochi-terminal-field{
+    background-color: transparent;
+    color: black;
+    font-family: Monospace;
+    --vaadin-input-field-value-color: black;
+    --vaadin-input-field-label-color: black;
     --vaadin-input-field-focused-label-color: purple;
 }
 
@@ -86,4 +104,14 @@
 }
 .openvaultview-leftlayout{
     font-size: 5rem;
+}
+.mochi-md-editor-preview{
+    background: transparent;
+    color: black;
+    font-family: Monospace;
+}
+.mochi-md-editor{
+    background: transparent;
+    font-family: Monospace;
+    color: black;
 }

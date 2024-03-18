@@ -5,11 +5,13 @@
  */
 package com.jakubwawak.mochi.backend.datamanager;
 
+import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.backend.database.Database_Connector;
 import com.jakubwawak.mochi.backend.database.Database_Vault;
 import com.jakubwawak.mochi.enitity.Vault;
 import com.jakubwawak.mochi.maintanance.MKey;
 import org.bson.types.ObjectId;
+import com.jakubwawak.mochi.enitity.Note;
 
 /**
  * Object for maintaining all Vault related functions
@@ -50,5 +52,16 @@ public class VaultManager {
         Vault vault = dv.getVault(vault_id);
         MKey mkey = new MKey(vault);
         return mkey.createFile();
+    }
+
+    /**
+     * Function for adding note to vault
+     * @param note
+     * @return
+     */
+    public void addNoteToVault(Note note){
+        MochiApplication.currentVault.addNote(note);
+        MochiApplication.currentVault.addLog("Added new note to vault: "+note.note_name);
+        MochiApplication.vaultUpdateService();
     }
 }
