@@ -156,13 +156,11 @@ public class MarkdownEditor extends VerticalLayout {
         editorPreview.add(htmlPreview);
 
         editorArea.addValueChangeListener(e -> {
-            Notification.show("Preview updated!");
             htmlPreview = new   Html(parseToHtml());
             editorPreview.removeAll();
             editorPreview.add(htmlPreview);
         });
         editorArea.addBlurListener(e -> {
-            Notification.show("Preview updated!");
             htmlPreview = new   Html(parseToHtml());
             editorPreview.removeAll();
             editorPreview.add(htmlPreview);

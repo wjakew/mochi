@@ -25,6 +25,7 @@ public class VaultNotesList extends VerticalLayout {
 
     public VaultNotesList(){
         noteGrid = new Grid<>(Note.class,false);
+        noteGrid.addClassName("mochi-vault-list");
         prepareLayout();
     }
 

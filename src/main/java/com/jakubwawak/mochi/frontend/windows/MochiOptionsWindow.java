@@ -22,7 +22,7 @@ public class MochiOptionsWindow {
 
     // variables for setting x and y of window
     public String width = "50%";
-    public String height = "50%";
+    public String height = "30%";
     public String backgroundStyle = "";
 
     // main login components
@@ -65,17 +65,14 @@ public class MochiOptionsWindow {
 
         main_layout.add(VaadinIcon.GLOBE.create());
         main_layout.add(new Text("Mochi Options"));
-        main_layout.add(closevault_button);
         main_layout.add(createnote_button);
+        main_layout.add(closevault_button);
 
         main_layout.setSizeFull();
         main_layout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         main_layout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         main_layout.getStyle().set("text-align", "center");
 
-        main_layout.getStyle().set("border-radius","25px");
-        main_layout.getStyle().set("background-color",backgroundStyle);
-        main_layout.getStyle().set("--lumo-font-family","Monospace");
         main_dialog.add(main_layout);
         main_dialog.setWidth(width);main_dialog.setHeight(height);
     }
@@ -99,5 +96,6 @@ public class MochiOptionsWindow {
         EditorWindow ew = new EditorWindow(null);
         main_layout.add(ew.main_dialog);
         ew.main_dialog.open();
+        main_dialog.close();
     }
 }

@@ -30,7 +30,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MochiApplication implements AppShellConfigurator {
 
 	public static String version = "v1.0.0";
-	public static String build = "mochi190323REV2";
+	public static String build = "mochi20323REV1";
 
 	public static String databaseURL = "mongodb://localhost:27017";
 

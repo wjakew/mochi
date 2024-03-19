@@ -115,3 +115,9 @@
     font-family: Monospace;
     color: black;
 }
+.mochi-vault-list::part(cell){
+    background-color: black;
+}
+.vaadin-grid-cell-content{
+    background-color: black;
+}
