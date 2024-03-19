@@ -10,6 +10,8 @@ import com.jakubwawak.mochi.backend.database.Database_Vault;
 import com.jakubwawak.mochi.backend.datamanager.VaultManager;
 import com.jakubwawak.mochi.enitity.Mochi;
 import com.jakubwawak.mochi.enitity.Vault;
+import com.jakubwawak.mochi.frontend.components.VaultNotesList;
+import com.jakubwawak.mochi.frontend.components.markdownEditor.MarkdownEditor;
 import com.jakubwawak.mochi.maintanance.ConsoleColors;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
@@ -28,7 +30,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MochiApplication implements AppShellConfigurator {
 
 	public static String version = "v1.0.0";
-	public static String build = "mochi190323REV1";
+	public static String build = "mochi190323REV2";
 
 	public static String databaseURL = "mongodb://localhost:27017";
 
@@ -40,6 +42,8 @@ public class MochiApplication implements AppShellConfigurator {
 	public static VaultManager vaultManager;
 
 
+	public static VaultNotesList vaultNotesList;
+	public static MarkdownEditor markdownEditor;
 	public static int log_database_dump_flag = 1;
 
 	/**
@@ -112,6 +116,8 @@ public class MochiApplication implements AppShellConfigurator {
 		try{
 			Database_Vault dv = new Database_Vault(database);
 			dv.updateVault(currentVault);
+			vaultManager.loadNotesObjectsToVault();
+			MochiApplication.vaultNotesList.reloadGrid();
 		}catch(Exception ex){
 			notificationService("Failed to update vault on database ("+ex.toString()+")",4);
 		}

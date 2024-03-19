@@ -5,6 +5,7 @@
  */
 package com.jakubwawak.mochi.enitity;
 
+import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.maintanance.RandomString;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -58,6 +59,7 @@ public class Vault {
         this.vault_log = document.getList("vault_log",String.class);
         this.vault_notes_list = document.getList("vault_notes_list",ObjectId.class);
         this.vault_recovery_key = document.getString("vault_recovery_key");
+        this.vault_notes_objects = new ArrayList<>();
     }
 
     /**

@@ -70,6 +70,14 @@ public class Note {
         return document;
     }
 
+    public String getNote_name(){
+        return note_name;
+    }
+
+    public String getNoteCreationTime(){
+        return note_creationtime;
+    }
+
     /**
      * Function for adding log to note object
      * @param log

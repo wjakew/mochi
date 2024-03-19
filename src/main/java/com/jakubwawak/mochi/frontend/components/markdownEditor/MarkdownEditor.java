@@ -258,6 +258,21 @@ public class MarkdownEditor extends VerticalLayout {
     }
 
     /**
+     * Function for reloading note
+     * @param note
+     */
+    public void reloadNote(Note note){
+        if ( note != null ){
+            this.note = note;
+            name_field.setValue(this.note.note_name);
+            saveupdateText = "Update";
+            saveupdate_button.setText(saveupdateText);
+            editorArea.setValue(this.note.note_raw);
+            refreshPreview();
+        }
+    }
+
+    /**
      * Function for saving note to vault
      * @param ex
      */

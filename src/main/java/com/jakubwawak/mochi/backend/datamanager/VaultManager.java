@@ -7,6 +7,7 @@ package com.jakubwawak.mochi.backend.datamanager;
 
 import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.backend.database.Database_Connector;
+import com.jakubwawak.mochi.backend.database.Database_Note;
 import com.jakubwawak.mochi.backend.database.Database_Vault;
 import com.jakubwawak.mochi.enitity.Vault;
 import com.jakubwawak.mochi.maintanance.MKey;
@@ -63,5 +64,19 @@ public class VaultManager {
         MochiApplication.currentVault.addNote(note);
         MochiApplication.currentVault.addLog("Added new note to vault: "+note.note_name);
         MochiApplication.vaultUpdateService();
+    }
+
+    /**
+     * Function for loading note object to vault object
+     */
+    public void loadNotesObjectsToVault(){
+        MochiApplication.currentVault.vault_notes_objects.clear();
+        Database_Note dn = new Database_Note(MochiApplication.database);
+        for(ObjectId note_id : MochiApplication.currentVault.vault_notes_list){
+            Note note = dn.getNote(note_id);
+            MochiApplication.currentVault.vault_notes_objects.add(note);
+        }
+        MochiApplication.database.log("VAULT-NOTES-UPDATE","Updated notes object list!");
+        MochiApplication.notificationService("Notes object in vault updated!",2);
     }
 }

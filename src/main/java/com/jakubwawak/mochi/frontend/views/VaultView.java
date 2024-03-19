@@ -6,6 +6,8 @@ all rights reserved
 package com.jakubwawak.mochi.frontend.views;
 
 import com.jakubwawak.mochi.MochiApplication;
+import com.jakubwawak.mochi.frontend.components.VaultNotesList;
+import com.jakubwawak.mochi.frontend.components.markdownEditor.MarkdownEditor;
 import com.jakubwawak.mochi.frontend.components.mochiheader.MochiHeader;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Text;
@@ -32,6 +34,8 @@ public class VaultView extends VerticalLayout {
 
     MochiHeader header;
 
+    HorizontalLayout mainLayout;
+
 
     /**
      * Constructor
@@ -47,6 +51,12 @@ public class VaultView extends VerticalLayout {
      */
     void prepareComponents(){
         header = new MochiHeader();
+        MochiApplication.markdownEditor = new MarkdownEditor(null);
+
+        mainLayout = new HorizontalLayout();
+        mainLayout.setSizeFull();
+        mainLayout.setAlignItems(Alignment.CENTER);
+        mainLayout.setVerticalComponentAlignment(Alignment.CENTER);
     }
 
     /**
@@ -55,6 +65,9 @@ public class VaultView extends VerticalLayout {
     void prepareLayout(){
         prepareComponents();
         if (MochiApplication.currentVault != null ){
+            MochiApplication.vaultNotesList.setWidth("30%");MochiApplication.vaultNotesList.setHeight("100%");
+            mainLayout.add(MochiApplication.vaultNotesList,MochiApplication.markdownEditor);
+            add(mainLayout);
             add(header);
         }
         else{
@@ -65,5 +78,4 @@ public class VaultView extends VerticalLayout {
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         getStyle().set("text-align", "center");
     }
-
 }

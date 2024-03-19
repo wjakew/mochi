@@ -9,6 +9,7 @@ import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.backend.database.Database_Vault;
 import com.jakubwawak.mochi.enitity.Mochi;
 import com.jakubwawak.mochi.enitity.Vault;
+import com.jakubwawak.mochi.frontend.components.VaultNotesList;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -103,6 +104,8 @@ public class VaultPasswordWindow {
                 MochiApplication.notificationService("Vault "+openedVault.vault_name+" opened!",1);
                 main_dialog.close();
                 MochiApplication.currentVault = openedVault;
+                MochiApplication.vaultNotesList = new VaultNotesList();
+                MochiApplication.vaultManager.loadNotesObjectsToVault();
                 // -> move to home screen
                 openVault_button.getUI().ifPresent(ui ->
                         ui.navigate("/vault"));
