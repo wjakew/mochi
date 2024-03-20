@@ -42,7 +42,7 @@ public class VaultView extends VerticalLayout {
      */
     public VaultView(){
         this.getElement().setAttribute("theme", Lumo.DARK);
-        addClassName("openvaultview");
+        addClassName("vaultview");
         prepareLayout();
     }
 

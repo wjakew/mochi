@@ -116,7 +116,7 @@ public class MarkdownEditor extends VerticalLayout {
         HtmlRenderer renderer = HtmlRenderer.builder(options).build();
         Node document = parser.parse(currentValue);
         String value = "<body><div>"+renderer.render(document)+"</div></body>";
-        editorPreview.getStyle().set("color","black");
+        editorPreview.getStyle().set("color","white");
         return value;
     }
 
@@ -133,26 +133,25 @@ public class MarkdownEditor extends VerticalLayout {
      */
     void prepareCompontents() {
         saveupdate_button = new Button(saveupdateText,VaadinIcon.DISC.create(),this::setSaveupdate_button);
-        saveupdate_button.addClassName("mochi-button-dark");
+        saveupdate_button.addClassName("mochi-editor-button");
 
         name_field = new TextField();
         name_field.setPlaceholder("note title");
-        name_field.addClassName("mochi-terminal-field");
+        name_field.addClassName("mochi-editor-input");
         name_field.setWidth("70%");
         name_field.setValue(note.note_name);
 
         editorArea = new TextArea();
-        editorArea.addClassName("mochi-terminal-field");
+        editorArea.addClassName("mochi-editor-input");
         editorArea.setSizeFull();
         editorArea.setValue(currentValue);
 
         editorPreview = new Div();
         editorPreview.setSizeFull();
-        editorPreview.getStyle().set("font-family","Monospace");
-        editorPreview.getStyle().set("text-align","left");
+        editorPreview.addClassName("mochi-editor-input");
 
         htmlPreview= new Html(parseToHtml());
-        htmlPreview.addClassName("mochi-md-editor-preview");
+        htmlPreview.addClassName("mochi-editor-input");
         editorPreview.add(htmlPreview);
 
         editorArea.addValueChangeListener(e -> {

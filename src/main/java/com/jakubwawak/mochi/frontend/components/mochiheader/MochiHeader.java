@@ -51,7 +51,7 @@ public class MochiHeader extends HorizontalLayout {
     void prepare_header(){
 
         mochi_button = new Button("mochi",this::setMochi_button);
-        mochi_button.addClassName("mochi-button-dark");
+        mochi_button.addClassName("mochi-header-button");
 
         terminal_field = new TextField();
         terminal_field.setPlaceholder("command...");terminal_field.setPrefixComponent(VaadinIcon.TERMINAL.create());
