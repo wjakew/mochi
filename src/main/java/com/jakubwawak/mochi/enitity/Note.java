@@ -5,6 +5,7 @@
  */
 package com.jakubwawak.mochi.enitity;
 
+import com.jakubwawak.mochi.maintanance.RandomString;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -84,5 +85,32 @@ public class Note {
      */
     public void addLog(String log){
         note_log.add(LocalDateTime.now().toString()+" - "+log);
+    }
+
+    /**
+     * Function for checking if note is shared
+     * @return boolean
+     */
+    public boolean isShared(){
+        return note_url.isEmpty();
+    }
+
+    /**
+     * Function for creating share URL on objects
+     * @return String
+     */
+    public String share(){
+        RandomString rs = new RandomString(20);
+        note_url = rs.nextString();
+        addLog("Note is shared. Sharing started at URL: "+note_url);
+        return note_url;
+    }
+
+    /**
+     * Function for removing note sharing
+     */
+    public void removeshare(){
+        note_url = "";
+        addLog("Removed note sharing from URL.");
     }
 }

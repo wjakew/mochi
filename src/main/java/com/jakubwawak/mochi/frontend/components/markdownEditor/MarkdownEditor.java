@@ -9,6 +9,7 @@ import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.backend.database.Database_Note;
 import com.jakubwawak.mochi.enitity.Note;
 import com.jakubwawak.mochi.enitity.Vault;
+import com.jakubwawak.mochi.frontend.windows.ShareNoteWindow;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -55,6 +56,7 @@ public class MarkdownEditor extends VerticalLayout {
     Html htmlPreview;
 
     Button saveupdate_button;
+    Button share_button;
     String saveupdateText;
 
     TextField name_field;
@@ -134,6 +136,10 @@ public class MarkdownEditor extends VerticalLayout {
     void prepareCompontents() {
         saveupdate_button = new Button(saveupdateText,VaadinIcon.DISC.create(),this::setSaveupdate_button);
         saveupdate_button.addClassName("mochi-editor-button");
+
+        share_button = new Button("Share Note",VaadinIcon.SHARE.create(),this::setShare_button);
+        share_button.setEnabled(false);
+        share_button.addClassName("mochi-editor-button");
 
         name_field = new TextField();
         name_field.setPlaceholder("note title");
@@ -223,7 +229,7 @@ public class MarkdownEditor extends VerticalLayout {
         left_layout.setSizeFull();
         left_layout.setJustifyContentMode(JustifyContentMode.START);
         left_layout.setAlignItems(Alignment.CENTER);
-        left_layout.add(saveupdate_button,name_field);
+        left_layout.add(saveupdate_button,share_button,name_field);
 
         FlexLayout right_layout = new FlexLayout();
         right_layout.setSizeFull();
@@ -265,6 +271,7 @@ public class MarkdownEditor extends VerticalLayout {
             saveupdateText = "Update";
             saveupdate_button.setText(saveupdateText);
             editorArea.setValue(this.note.note_raw);
+            share_button.setEnabled(true);
             refreshPreview();
         }
     }
@@ -273,7 +280,7 @@ public class MarkdownEditor extends VerticalLayout {
      * Function for saving note to vault
      * @param ex
      */
-    public void setSaveupdate_button(ClickEvent ex){
+    private void setSaveupdate_button(ClickEvent ex){
         if ( saveupdateText.equals("Save")){
             note.note_raw = editorArea.getValue();
             note.note_name = name_field.getValue();
@@ -284,6 +291,7 @@ public class MarkdownEditor extends VerticalLayout {
                 note = savedNote;
                 saveupdateText = "Update";
                 saveupdate_button.setText(saveupdateText);
+                share_button.setEnabled(true);
             }
         }
         else{
@@ -297,6 +305,15 @@ public class MarkdownEditor extends VerticalLayout {
                 saveupdate_button.setText(saveupdateText);
             }
         }
+    }
 
+    /**
+     * share_button action
+     * @param ex
+     */
+    private void setShare_button(ClickEvent ex){
+        ShareNoteWindow snw = new ShareNoteWindow(note);
+        add(snw.main_dialog);
+        snw.main_dialog.open();
     }
 }
