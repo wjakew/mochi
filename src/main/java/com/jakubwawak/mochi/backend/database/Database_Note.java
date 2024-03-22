@@ -68,6 +68,25 @@ public class Database_Note {
             return null;
         }
     }
+
+    /**
+     * Function for loading notes to NoteView for sharing
+     * @param note_url
+     * @return Note
+     */
+    public Note loadNote(String note_url){
+        try{
+            MongoCollection<Document> mochiCollection = database.get_data_collection("mochi_notes");
+            Document note_document = mochiCollection.find(new Document("note_url",note_url)).first();
+            if ( note_document != null ){
+                return new Note(note_document);
+            }
+            return null;
+        }catch(Exception ex){
+            database.log("GET-NOTE-FAILED","Failed to load note from database ("+ex.toString()+")");
+            return null;
+        }
+    }
     /**
      * Function for inserting note
      * @param note

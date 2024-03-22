@@ -72,7 +72,7 @@ public class ShareNoteWindow {
         shareaction_button = new Button("", VaadinIcon.SHARE.create(),this::setShareaction_button);
         shareaction_button.addClassName("mochi-editor-button");
 
-        visitlink_button = new Button("Visit shared note page!",VaadinIcon.NOTEBOOK.create());
+        visitlink_button = new Button("Visit shared note page!",VaadinIcon.NOTEBOOK.create(),this::setVisitlink_button);
         visitlink_button.addClassName("mochi-button-transparent");
 
         if ( this.note.note_url.isEmpty() ){
@@ -144,5 +144,14 @@ public class ShareNoteWindow {
                 MochiApplication.notificationService("Failed to share note, check log!",4);
             }
         }
+    }
+
+    /**
+     * visitlink_button
+     * @param ex
+     */
+    private void setVisitlink_button(ClickEvent ex){
+        visitlink_button.getUI().ifPresent(ui ->
+                ui.navigate("/note-viewer/"+note.note_url));
     }
 }

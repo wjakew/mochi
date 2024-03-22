@@ -20,6 +20,10 @@
     border-radius:10px;
     width: 100vw;
 }
+.mochi-note-view{
+    background-color: black;
+    color: white;
+}
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
