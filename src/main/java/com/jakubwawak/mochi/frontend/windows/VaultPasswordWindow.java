@@ -60,9 +60,10 @@ public class VaultPasswordWindow {
 
         password_field = new PasswordField("Vault Password");password_field.setPlaceholder("pss secret");
         password_field.setWidthFull();
+        password_field.addClassName("mochi-editor-input");
 
         openVault_button = new Button("Unlock Vault",this::setOpenVault_button);
-        openVault_button.addClassName("mochi-button-bright"); openVault_button.setWidthFull();
+        openVault_button.addClassName("mochi-button-dark"); openVault_button.setWidthFull();
     }
 
     /**

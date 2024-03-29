@@ -9,7 +9,6 @@ import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.frontend.windows.CreateVaultWindow;
 import com.jakubwawak.mochi.frontend.windows.VaultPasswordWindow;
 import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H3;
@@ -22,8 +21,6 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextArea;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.router.PageTitle;
@@ -48,8 +45,7 @@ public class OpenVaultView extends VerticalLayout {
     Button createVault_button;
 
     MemoryBuffer memoryBuffer;
-    HorizontalLayout mainLayout;
-    VerticalLayout leftLayout,rightLayout;
+    VerticalLayout centerLayout;
 
     /**
      * Constructor
@@ -69,8 +65,8 @@ public class OpenVaultView extends VerticalLayout {
             return OpenVaultView.class.getClassLoader().getResourceAsStream("images/mochi_icon.png");
         });
         Image logo = new Image(res,"aim logo");
-        logo.setHeight("30rem");
-        logo.setWidth("30rem");
+        logo.setHeight("15rem");
+        logo.setWidth("15rem");
 
         upload_button = new Button("Upload Key!");
         upload_button.addClassName("mochi-button-transparent");
@@ -86,7 +82,7 @@ public class OpenVaultView extends VerticalLayout {
         int maxFileSizeInBytes =  1024 * 1024; // 1MB
         keyUploadComponent.setMaxFileSize(maxFileSizeInBytes);
         keyUploadComponent.setAcceptedFileTypes("application/mkey", ".mkey");
-        keyUploadComponent.setWidth("100%");
+        keyUploadComponent.setWidth("50%");
         keyUploadComponent.addClassName("openvaultview-upload");
 
         keyUploadComponent.addSucceededListener(event -> {
@@ -119,37 +115,22 @@ public class OpenVaultView extends VerticalLayout {
         });
 
         createVault_button = new Button("Create new Vault",VaadinIcon.SAFE.create(),this::setCreateVault_button);
-        createVault_button.setWidth("90%");createVault_button.addThemeVariants(ButtonVariant.LUMO_CONTRAST,ButtonVariant.LUMO_PRIMARY);
+        createVault_button.setWidth("50%");createVault_button.addThemeVariants(ButtonVariant.LUMO_CONTRAST,ButtonVariant.LUMO_PRIMARY);
         createVault_button.addClassName("mochi-button-dark");
 
-        mainLayout = new HorizontalLayout();
-        mainLayout.setSizeFull();
-        mainLayout.setVerticalComponentAlignment(Alignment.CENTER);mainLayout.setAlignItems(Alignment.CENTER);
-        mainLayout.addClassName("openvaultview-mainlayout");
 
-        leftLayout = new VerticalLayout();
-        leftLayout.addClassName("openvaultview-leftlayout");
-        leftLayout.setWidthFull();leftLayout.setHeight("50%");
-        leftLayout.setJustifyContentMode(JustifyContentMode.CENTER);
-        leftLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        leftLayout.getStyle().set("text-align", "center");
+        centerLayout = new VerticalLayout();
+        centerLayout.addClassName("centerlayout");
+        centerLayout.setWidth("50%");
+        centerLayout.setHeight("70%");
+        centerLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        centerLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        centerLayout.getStyle().set("text-align", "center");
 
-        rightLayout = new VerticalLayout();
-        rightLayout.addClassName("openvaultview-rightlayout");
-        rightLayout.setWidth("70%");rightLayout.setHeight("50%");
-        rightLayout.setJustifyContentMode(JustifyContentMode.CENTER);
-        rightLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        rightLayout.getStyle().set("text-align", "center");
-
-        rightLayout.add(VaadinIcon.LOCK.create());
-        rightLayout.add(new H6("OPEN YOUT VAULT"));
-        rightLayout.add(keyUploadComponent);
-        rightLayout.add(createVault_button);
-
-        leftLayout.add(logo);
-        leftLayout.add(new H6(MochiApplication.version+"/"+MochiApplication.build));
-
-        mainLayout.add(leftLayout,rightLayout);
+        centerLayout.add(logo);
+        centerLayout.add(new H3("mochi"));
+        centerLayout.add(keyUploadComponent);
+        centerLayout.add(createVault_button);
     }
 
     /**
@@ -158,7 +139,7 @@ public class OpenVaultView extends VerticalLayout {
     void prepareLayout(){
         prepareComponents();
 
-        add(mainLayout);
+        add(centerLayout);
 
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);

@@ -7,6 +7,7 @@ package com.jakubwawak.mochi.frontend.components.mochiheader;
 
 import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.enitity.Vault;
+import com.jakubwawak.mochi.frontend.components.VaultNotesMenu;
 import com.jakubwawak.mochi.frontend.views.OpenVaultView;
 import com.jakubwawak.mochi.frontend.windows.MochiOptionsWindow;
 import com.vaadin.flow.component.ClickEvent;
@@ -40,6 +41,7 @@ public class MochiHeader extends HorizontalLayout {
     Button mochi_button;
 
 
+
     /**
      * Constructor
      */
@@ -58,6 +60,8 @@ public class MochiHeader extends HorizontalLayout {
         terminal_field.setWidth("80%");
         terminal_field.addClassName("mochi-terminal-field");
 
+        MochiApplication.vaultNotesMenu = new VaultNotesMenu();
+
         FlexLayout left_layout = new FlexLayout();
         left_layout.setJustifyContentMode(JustifyContentMode.CENTER);
         left_layout.setAlignItems(Alignment.CENTER);
@@ -67,7 +71,7 @@ public class MochiHeader extends HorizontalLayout {
         center_layout.setSizeFull();
         center_layout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         center_layout.setAlignItems(FlexComponent.Alignment.CENTER);
-        center_layout.add(new H6(new Date().toString()));
+        center_layout.add(MochiApplication.vaultNotesMenu);
 
         FlexLayout right_layout = new FlexLayout();
         right_layout.setJustifyContentMode(JustifyContentMode.END);

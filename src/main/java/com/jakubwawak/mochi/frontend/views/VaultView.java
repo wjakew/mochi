@@ -69,6 +69,7 @@ public class VaultView extends VerticalLayout {
             mainLayout.add(MochiApplication.vaultNotesList,MochiApplication.markdownEditor);
             add(mainLayout);
             add(header);
+            MochiApplication.vaultNotesList.setVisible(false);
         }
         else{
             add(new Text("No vault is opened right now."));

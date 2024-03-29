@@ -40,16 +40,8 @@
     font-family: Monospace;
     color: black;
 }
-.mochi-button-bright{
-    background: linear-gradient(-45deg, #2A2634, #DAD096);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-    font-family: Monospace;
-    border-radius: 25px;
-    color: black;
-}
 .mochi-button-dark{
-    background: linear-gradient(-45deg, #000000, #FFFFFF);
+    background: linear-gradient(-45deg, #FFFFFF, #808080);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
     font-family: Monospace;
@@ -76,11 +68,11 @@
     text-algin: left;
 }
 .mochi-header{
-    background: linear-gradient(-45deg, #eeaeca,#94bbe9);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(5px);
     font-family: Monospace;
-    color: white;
+    color: black;
     overflow: visible;
     border-radius:10px;
     --vaadin-input-field-focused-label-color: purple;
@@ -103,7 +95,7 @@
     background-color: transparent;
     color: white;
     font-family: Monospace;
-    --vaadin-input-field-value-color: white;
+    --vaadin-input-field-value-color: black;
     --vaadin-input-field-label-color: white;
     --vaadin-input-field-focused-label-color: purple;
 }
@@ -115,30 +107,28 @@
     --vaadin-input-field-label-color: black;
     --vaadin-input-field-focused-label-color: purple;
 }
-
+/* window styles*/
 .mochi-dialog-window::part(overlay) {
-    background: linear-gradient(-45deg, #A91267, #2A2634, #72394D, #DAD096);
-    --vaadin-input-field-focused-label-color: purple;
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
+    border-radius: 25px;
+    border-style: solid;
+    background-color: rgba(189, 195, 199, .15);
+    backdrop-filter: blur(5px);
     border-radius: 45px;
     font-family: Monospace;
     color: white;
 }
-.openvaultview-rightlayout{
-    background: linear-gradient(-45deg, #A91267, #2A2634, #72394D, #DAD096);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-    height: 100vh;
-    font-family: Monospace;
-    color: white;
-    border-radius: 90px;
-    font-size: 4rem;
-    margin: 25px;
-}
-.openvaultview-leftlayout{
+/* frosted background for layout creation*/
+.centerlayout{
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(5px);
     font-size: 5rem;
 }
+.centerlayout H3{
+    font-family: Monospace;
+    color: white;
+}
+/* editor styles*/
 .mochi-md-editor-preview{
     background: transparent;
     color: black;
