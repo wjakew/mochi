@@ -78,14 +78,7 @@ public class MochiHeader extends HorizontalLayout {
         right_layout.setAlignItems(FlexComponent.Alignment.END);
         right_layout.setWidth("80%");
 
-        StreamResource res = new StreamResource("aim_logo.png", () -> {
-            return OpenVaultView.class.getClassLoader().getResourceAsStream("images/mochi_icon.png");
-        });
-        Image logo = new Image(res,"aim logo");
-        logo.setHeight("4rem");
-        logo.setWidth("4rem");
-
-        left_layout.add(logo,terminal_field);
+        left_layout.add(terminal_field);
         right_layout.add(mochi_button);
 
         add(left_layout,center_layout,right_layout);

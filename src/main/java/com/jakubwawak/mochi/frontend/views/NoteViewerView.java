@@ -7,14 +7,18 @@ package com.jakubwawak.mochi.frontend.views;
 
 import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.backend.database.Database_Note;
-import com.jakubwawak.mochi.enitity.Mochi;
 import com.jakubwawak.mochi.enitity.Note;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H6;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 import com.vladsch.flexmark.html.HtmlRenderer;
@@ -26,14 +30,14 @@ import com.vladsch.flexmark.util.data.MutableDataSet;
  * View for showing note content
  */
 @Route("/note-viewer")
-public class NoteView extends VerticalLayout implements HasUrlParameter<String>{
+public class NoteViewerView extends VerticalLayout implements HasUrlParameter<String>{
 
     Button vaultreturn_button;
 
     /**
      * Constructor
      */
-    public NoteView(){
+    public NoteViewerView(){
         addClassName("mochi-note-view");
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);
@@ -48,8 +52,33 @@ public class NoteView extends VerticalLayout implements HasUrlParameter<String>{
 
     void prepareNoteView(Note note){
         prepareComponents();
-        add(new Text(note.getNote_name()));
-        add(vaultreturn_button);
+
+        HorizontalLayout headerLayout = new HorizontalLayout();
+
+        FlexLayout left_layout = new FlexLayout();
+        left_layout.setJustifyContentMode(JustifyContentMode.CENTER);
+        left_layout.setAlignItems(Alignment.CENTER);
+        left_layout.setWidth("90%");
+
+        FlexLayout right_layout = new FlexLayout();
+        right_layout.setJustifyContentMode(JustifyContentMode.END);
+        right_layout.setAlignItems(FlexComponent.Alignment.END);
+        right_layout.setWidth("80%");
+
+        headerLayout.add(left_layout,right_layout);
+
+        headerLayout.setWidth("90%");
+        headerLayout.setMargin(true);
+        headerLayout.setAlignItems(Alignment.CENTER);
+        headerLayout.setVerticalComponentAlignment(Alignment.CENTER);
+
+        left_layout.add(vaultreturn_button);
+        left_layout.add(new H6("Note ID: "+note.note_id));
+        left_layout.add(new H6("Date: "+note.note_creationtime));
+        right_layout.add(new H6("Note Viewer"));
+
+        add(headerLayout);
+        add(new H1(note.getNote_name()));
         Div editorPreview = new Div();
         MutableDataSet options = new MutableDataSet();
         Parser parser = Parser.builder(options).build();
@@ -58,6 +87,8 @@ public class NoteView extends VerticalLayout implements HasUrlParameter<String>{
         String value = "<body><div>"+renderer.render(document)+"</div></body>";
         editorPreview.getStyle().set("color","white");
         Html htmlPreview = new Html(value);
+        htmlPreview.getStyle().set("width","100%");
+        htmlPreview.getStyle().set("text-algin","left");
         add(htmlPreview);
     }
 

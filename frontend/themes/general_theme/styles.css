@@ -24,6 +24,14 @@
     background-color: black;
     color: white;
 }
+.mochi-note-view H6{
+    color: white;
+    font-family: Monospace;
+}
+.mochi-note-view H1{
+    color: white;
+    font-family: Monospace;
+}
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
