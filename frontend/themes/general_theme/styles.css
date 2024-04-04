@@ -6,6 +6,13 @@
     font-family: Monospace;
     color: black;
 }
+.mochi-notification::part(overlay){
+    background-color: black;
+    color: white;
+    font-family: Monospace;
+    border-style: solid;
+    border-radius: 10px;
+}
 .vaultview{
     background-color: black;
     color: white;
@@ -17,7 +24,7 @@
     font-family: Monospace;
     color: white;
     overflow: visible;
-    border-radius:10px;
+    border-radius: 10px;
     width: 100vw;
 }
 .mochi-note-view{

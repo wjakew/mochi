@@ -5,6 +5,8 @@ all rights reserved
 */
 package com.jakubwawak.mochi.frontend.components.markdownEditor;
 
+import com.jakubwawak.mochi.MochiApplication;
+
 /**
  * Object for creating actions based on markdown editor content
  */

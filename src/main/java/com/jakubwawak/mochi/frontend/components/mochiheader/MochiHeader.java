@@ -8,10 +8,12 @@ package com.jakubwawak.mochi.frontend.components.mochiheader;
 import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.enitity.Vault;
 import com.jakubwawak.mochi.frontend.components.VaultNotesMenu;
+import com.jakubwawak.mochi.frontend.components.markdownEditor.EditorActions;
 import com.jakubwawak.mochi.frontend.views.OpenVaultView;
 import com.jakubwawak.mochi.frontend.windows.MochiOptionsWindow;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H6;
@@ -36,6 +38,8 @@ public class MochiHeader extends HorizontalLayout {
 
     FlexLayout left_layout,right_layout;
 
+    TerminalParser terminalParser;
+
     TextField terminal_field;
 
     Button mochi_button;
@@ -48,6 +52,7 @@ public class MochiHeader extends HorizontalLayout {
     public MochiHeader(){
         addClassName("mochi-header");
         prepare_header();
+        terminalParser = new TerminalParser();
     }
 
     void prepare_header(){
@@ -59,6 +64,20 @@ public class MochiHeader extends HorizontalLayout {
         terminal_field.setPlaceholder("command...");terminal_field.setPrefixComponent(VaadinIcon.TERMINAL.create());
         terminal_field.setWidth("80%");
         terminal_field.addClassName("mochi-terminal-field");
+
+        terminal_field.addKeyPressListener(e->{
+            if (e.getKey().equals(Key.ENTER)){
+                String userInput = terminal_field.getValue();
+                if ( userInput.isBlank() ){
+                    MochiApplication.notificationService("Empty command!",3);
+                }
+                else{
+                    // send user input to EditorActions
+                    terminalParser.createAction(userInput);
+                }
+
+            }
+        });
 
         MochiApplication.vaultNotesMenu = new VaultNotesMenu();
 
