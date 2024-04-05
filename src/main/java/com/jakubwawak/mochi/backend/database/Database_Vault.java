@@ -122,7 +122,7 @@ public class Database_Vault {
                 vault = new Vault(vault_document);
                 return vault;
             }
-            MochiApplication.notificationService("Cannot find vault with given hash!",3);
+            MochiApplication.database.log("GET-VAULT-EMPTY","Cannot find vault with given hash!");
             return null;
         }
         catch(Exception ex){

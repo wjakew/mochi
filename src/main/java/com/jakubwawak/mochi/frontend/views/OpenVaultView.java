@@ -7,9 +7,11 @@ package com.jakubwawak.mochi.frontend.views;
 
 import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.backend.database.Database_Vault;
+import com.jakubwawak.mochi.enitity.Vault;
 import com.jakubwawak.mochi.frontend.windows.CreateVaultWindow;
 import com.jakubwawak.mochi.frontend.windows.VaultPasswordWindow;
 import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -51,12 +53,17 @@ public class OpenVaultView extends VerticalLayout {
 
     Button openVault_button;
 
+    int fieldFlag;
+
+    Vault temporaryVault;
+
 
     /**
      * Constructor
      */
     public OpenVaultView(){
         this.getElement().setAttribute("theme", Lumo.DARK);
+        fieldFlag = 0;
         addClassName("openvaultview");
         prepareLayout();
     }
@@ -106,27 +113,33 @@ public class OpenVaultView extends VerticalLayout {
                     cvw.main_dialog.open();
                     break;
                 }
-                case "open":
-                {
-                    String pin = firstadd_field.getValue();
-                    if ( MochiApplication.currentVault.vault_code.equals(pin)){
-                        openVault_button.setVisible(true);
-                    }
-                }
                 default:
                 {
                     Database_Vault dv = new Database_Vault(MochiApplication.database);
-                    MochiApplication.currentVault = dv.getVault(value);
-                    if ( MochiApplication.currentVault != null ){
+                    Vault vault = dv.getVault(value);
+                    if ( dv.getVault(value) != null ){
+                        temporaryVault = vault;
                         firstadd_field.setPlaceholder("vault pin...");
                         firstadd_field.setVisible(true);
+                        fieldFlag = 0;
                     }
                     else{
-                        MochiApplication.notificationService("No vault with given hash!",1);
+                        if ( fieldFlag != 1 )
+                            MochiApplication.notificationService("No vault with given hash!",1);
                     }
                 }
+            }
+        });
 
-
+        firstadd_field.addKeyPressListener(e->{
+            if ( e.getKey().equals(Key.ENTER)){
+                String value = firstadd_field.getValue();
+                if ( temporaryVault.vault_code.equals(value)){
+                    openVault_button.setVisible(true);
+                }
+                else{
+                    MochiApplication.notificationService("Wrong PIN for vault ("+temporaryVault.vault_id.toString()+")",1);
+                }
             }
         });
     }
@@ -151,6 +164,7 @@ public class OpenVaultView extends VerticalLayout {
     }
 
     private void setOpenVault_button(ClickEvent ex){
+        MochiApplication.currentVault = temporaryVault;
         openVault_button.getUI().ifPresent(ui ->
                 ui.navigate("/focus"));
     }
