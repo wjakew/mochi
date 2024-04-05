@@ -26,6 +26,7 @@ public class EditorActions {
      */
     public void clearEditor(){
         markdownEditor.editorArea.setValue("");
+        markdownEditor.name_field.setValue("");
         markdownEditor.refreshPreview();
         markdownEditor.saveupdate_button.setText("Save");
     }

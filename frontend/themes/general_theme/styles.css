@@ -1,10 +1,16 @@
 .openvaultview{
-    background: linear-gradient(-45deg, #A91267, #2A2634, #72394D, #DAD096);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-    height: 100vh;
-    font-family: Monospace;
-    color: black;
+    background-color: black;
+}
+.openvault-input{
+    --vaadin-input-field-background: tansparent;
+    --vaadin-input-field-hover-highlight: transparent;
+    --vaadin-input-field-invalid-hover-highlight: purple;
+    --vaadin-input-field-border-color: transparent;
+    --vaadin-input-field-value-color: white;
+    --vaadin-input-field-placeholder-color: white;
+    --vaadin-input-field-value-font-weight: 500;
+    font-family:Monospace;
+    text-algin: center;
 }
 .mochi-notification::part(overlay){
     background-color: black;
@@ -39,17 +45,6 @@
     color: white;
     font-family: Monospace;
 }
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-}
 .openvaultview-upload{
     --lumo-primary-color:black;
     font-family: Monospace;
@@ -82,6 +77,37 @@
     --vaadin-input-field-focused-label-color: purple;
     text-algin: left;
 }
+.focus-editor-textfield{
+    --vaadin-input-field-background: tansparent;
+    --vaadin-input-field-hover-highlight: transparent;
+    --vaadin-input-field-invalid-hover-highlight: purple;
+    --vaadin-input-field-border-color: transparent;
+    --vaadin-input-field-value-color: white;
+    --vaadin-input-field-placeholder-color: white;
+    --vaadin-input-field-value-font-weight: 500;
+    font-family:Monospace;
+}
+.focus-editor-textarea{
+    --vaadin-input-field-background: tansparent;
+    --vaadin-input-field-hover-highlight: black;
+    --vaadin-input-field-hover-highlight-opacity: 0;
+    --vaadin-input-field-invalid-hover-highlight: purple;
+    --vaadin-input-field-border-color: transparent;
+    --vaadin-input-field-value-color: white;
+    --vaadin-input-field-placeholder-color: white;
+    --vaadin-input-field-value-font-weight: 500;
+    font-family:Monospace;
+}
+.focus-editor-textarea:hover{
+    --vaadin-input-field-background: black;
+    --vaadin-input-field-hover-highlight: black;
+    --vaadin-input-field-hover-highlight-opacity: 1;
+    --vaadin-input-field-border-color: transparent;
+    --vaadin-input-field-value-color: white;
+    --vaadin-input-field-placeholder-color: white;
+    --vaadin-input-field-value-font-weight: 500;
+    font-family:Monospace;
+}
 .mochi-header{
     border-radius: 25px;
     background-color: rgba(255, 255, 255, .15);
@@ -97,7 +123,7 @@
     color: white;
     background-color: black;
     border-radius: 5px;
-    margin: 5px;
+    margin: 10px;
 }
 .mochi-button-transparent{
     --lumo-primary-color:white;
@@ -118,7 +144,7 @@
     background-color: transparent;
     color: black;
     font-family: Monospace;
-    --vaadin-input-field-value-color: black;
+    --vaadin-input-field-value-color: white;
     --vaadin-input-field-label-color: black;
     --vaadin-input-field-focused-label-color: purple;
 }

@@ -55,8 +55,7 @@ public class MarkdownEditor extends VerticalLayout {
     Div editorPreview;
     Html htmlPreview;
 
-    Button saveupdate_button;
-    Button share_button;
+    Button saveupdate_button,share_button,export_button;
     String saveupdateText;
 
     TextField name_field;
@@ -141,10 +140,13 @@ public class MarkdownEditor extends VerticalLayout {
         share_button.setEnabled(false);
         share_button.addClassName("mochi-editor-button");
 
+        export_button = new Button("Export",VaadinIcon.SAFE.create());
+        export_button.addClassName("mochi-editor-button");
+
         name_field = new TextField();
-        name_field.setPlaceholder("note title");
+        name_field.setPlaceholder("title..");
         name_field.addClassName("mochi-editor-input");
-        name_field.setWidth("70%");
+        name_field.setWidth("95%");
         name_field.setValue(note.note_name);
 
         editorArea = new TextArea();
@@ -206,10 +208,11 @@ public class MarkdownEditor extends VerticalLayout {
 
         splitLayout = new SplitLayout(leftEditorLayout,rightPreviewLayout);
         setSizeFull();
-        splitLayout.setSizeFull();
+        splitLayout.setWidth("95%");splitLayout.setHeightFull();
         splitLayout.setSplitterPosition(70);
 
         add(header);
+        add(name_field);
         add(splitLayout);
     }
 
@@ -229,7 +232,7 @@ public class MarkdownEditor extends VerticalLayout {
         left_layout.setSizeFull();
         left_layout.setJustifyContentMode(JustifyContentMode.START);
         left_layout.setAlignItems(Alignment.CENTER);
-        left_layout.add(saveupdate_button,share_button,name_field);
+        left_layout.add(saveupdate_button,share_button,export_button);
 
         FlexLayout right_layout = new FlexLayout();
         right_layout.setSizeFull();
@@ -238,7 +241,6 @@ public class MarkdownEditor extends VerticalLayout {
 
         header.add(left_layout,center_layout,right_layout);
         header.setWidth("100%");
-        header.setMargin(true);
         header.getStyle().set("color","black");
         header.getStyle().set("border-radius","15px");
 
@@ -256,8 +258,8 @@ public class MarkdownEditor extends VerticalLayout {
      */
     public void showNotification(String notificationText){
         Notification notification = Notification.show(notificationText, 5000,
-                Notification.Position.MIDDLE);
-        notification.addThemeVariants(NotificationVariant.LUMO_CONTRAST);
+                Notification.Position.BOTTOM_STRETCH);
+        notification.addClassName("mochi-notification");
     }
 
     /**
@@ -282,27 +284,38 @@ public class MarkdownEditor extends VerticalLayout {
      */
     private void setSaveupdate_button(ClickEvent ex){
         if ( saveupdateText.equals("Save")){
-            note.note_raw = editorArea.getValue();
-            note.note_name = name_field.getValue();
-            Database_Note dn = new Database_Note(MochiApplication.database);
-            Note savedNote = dn.insertNote(note);
-            if ( savedNote != null ){
-                MochiApplication.vaultManager.addNoteToVault(savedNote);
-                note = savedNote;
-                saveupdateText = "Update";
-                saveupdate_button.setText(saveupdateText);
-                share_button.setEnabled(true);
+            if (!editorArea.getValue().isEmpty() && !name_field.getValue().isEmpty()){
+                note.note_raw = editorArea.getValue();
+                note.note_name = name_field.getValue();
+                Database_Note dn = new Database_Note(MochiApplication.database);
+                Note savedNote = dn.insertNote(note);
+                if ( savedNote != null ){
+                    MochiApplication.vaultManager.addNoteToVault(savedNote);
+                    note = savedNote;
+                    saveupdateText = "Update";
+                    saveupdate_button.setText(saveupdateText);
+                    share_button.setEnabled(true);
+                }
             }
+            else{
+                MochiApplication.notificationService("Empty title/content. Cannot save",1);
+            }
+
         }
         else{
             // update note
-            note.note_raw = editorArea.getValue();
-            note.note_name = name_field.getValue();
-            Database_Note dn = new Database_Note(MochiApplication.database);
-            Note updatedNote = dn.updateNote(note);
-            if ( updatedNote != null ){
-                saveupdateText = "Update";
-                saveupdate_button.setText(saveupdateText);
+            if (!editorArea.getValue().isEmpty() && !name_field.getValue().isEmpty()) {
+                note.note_raw = editorArea.getValue();
+                note.note_name = name_field.getValue();
+                Database_Note dn = new Database_Note(MochiApplication.database);
+                Note updatedNote = dn.updateNote(note);
+                if (updatedNote != null) {
+                    saveupdateText = "Update";
+                    saveupdate_button.setText(saveupdateText);
+                }
+            }
+            else{
+                MochiApplication.notificationService("Empty title/content. Cannot update",1);
             }
         }
     }

@@ -101,7 +101,7 @@ public class MochiHeader extends HorizontalLayout {
         right_layout.add(mochi_button);
 
         add(left_layout,center_layout,right_layout);
-        setWidth("90%");
+        setWidth("95%");
         setMargin(true);
         setAlignItems(Alignment.CENTER);
         setVerticalComponentAlignment(Alignment.CENTER);

@@ -7,6 +7,7 @@ package com.jakubwawak.mochi.frontend.views;
 
 import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.frontend.components.VaultNotesList;
+import com.jakubwawak.mochi.frontend.components.markdownEditor.FocusEditor;
 import com.jakubwawak.mochi.frontend.components.markdownEditor.MarkdownEditor;
 import com.jakubwawak.mochi.frontend.components.mochiheader.MochiHeader;
 import com.vaadin.flow.component.ClickEvent;
@@ -29,18 +30,16 @@ import com.vaadin.flow.theme.lumo.Lumo;
  * Main application web view
  */
 @PageTitle("vault by mochi")
-@Route("/vault")
-public class VaultView extends VerticalLayout {
+@Route("/focus")
+public class FocusView extends VerticalLayout {
 
-    MochiHeader header;
-
-    HorizontalLayout mainLayout;
+    FocusEditor focusEditor;
 
 
     /**
      * Constructor
      */
-    public VaultView(){
+    public FocusView(){
         this.getElement().setAttribute("theme", Lumo.DARK);
         addClassName("vaultview");
         prepareLayout();
@@ -50,12 +49,7 @@ public class VaultView extends VerticalLayout {
      * Function for preparing components
      */
     void prepareComponents(){
-        header = new MochiHeader();
-
-        mainLayout = new HorizontalLayout();
-        mainLayout.setSizeFull();
-        mainLayout.setAlignItems(Alignment.CENTER);
-        mainLayout.setVerticalComponentAlignment(Alignment.CENTER);
+        focusEditor = new FocusEditor();
     }
 
     /**
@@ -64,11 +58,7 @@ public class VaultView extends VerticalLayout {
     void prepareLayout(){
         prepareComponents();
         if (MochiApplication.currentVault != null ){
-            MochiApplication.vaultNotesList.setWidth("30%");MochiApplication.vaultNotesList.setHeight("100%");
-            mainLayout.add(MochiApplication.vaultNotesList,MochiApplication.markdownEditor);
-            add(mainLayout);
-            add(header);
-            MochiApplication.vaultNotesList.setVisible(false);
+            add(focusEditor);
         }
         else{
             add(new Text("No vault is opened right now."));

@@ -32,7 +32,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MochiApplication implements AppShellConfigurator {
 
 	public static String version = "v1.0.0";
-	public static String build = "mochi040423REV1";
+	public static String build = "mochi050423REV1";
 
 	public static String databaseURL = "mongodb://localhost:27017";
 
@@ -55,6 +55,7 @@ public class MochiApplication implements AppShellConfigurator {
 	 */
 	public static void main(String[] args) {
 		showHeader();
+		MochiApplication.markdownEditor = new MarkdownEditor(null);
 		database = new Database_Connector();
 		database.setDatabase_url(databaseURL);
 		database.connect();
@@ -96,6 +97,7 @@ public class MochiApplication implements AppShellConfigurator {
 		try{
 			Notification noti = Notification.show(notificationString);
 			noti.addClassName("mochi-notification");
+			noti.setPosition(Notification.Position.TOP_END);
 			switch(notificationState){
 				case 1:
 					noti.addThemeVariants(NotificationVariant.LUMO_SUCCESS);

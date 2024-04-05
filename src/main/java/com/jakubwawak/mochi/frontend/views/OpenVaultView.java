@@ -6,9 +6,11 @@ all rights reserved
 package com.jakubwawak.mochi.frontend.views;
 
 import com.jakubwawak.mochi.MochiApplication;
+import com.jakubwawak.mochi.backend.database.Database_Vault;
 import com.jakubwawak.mochi.frontend.windows.CreateVaultWindow;
 import com.jakubwawak.mochi.frontend.windows.VaultPasswordWindow;
 import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H3;
@@ -21,6 +23,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.router.PageTitle;
@@ -40,12 +43,14 @@ import java.util.Scanner;
 @RouteAlias("/")
 public class OpenVaultView extends VerticalLayout {
 
-    Upload keyUploadComponent;
-    Button upload_button;
-    Button createVault_button;
+    TextField mochi_field;
+    TextField firstadd_field;
+    TextField secondadd_field;
+    TextField thirdadd_field;
+    TextField fourthadd_field;
 
-    MemoryBuffer memoryBuffer;
-    VerticalLayout centerLayout;
+    Button openVault_button;
+
 
     /**
      * Constructor
@@ -60,77 +65,70 @@ public class OpenVaultView extends VerticalLayout {
      * Function for preparing components
      */
     void prepareComponents(){
+        mochi_field = new TextField();
+        mochi_field.setValue("mochi");
+        mochi_field.setPlaceholder("?");
+        mochi_field.addClassName("focus-editor-textfield");
 
-        StreamResource res = new StreamResource("aim_logo.png", () -> {
-            return OpenVaultView.class.getClassLoader().getResourceAsStream("images/mochi_icon.png");
-        });
-        Image logo = new Image(res,"aim logo");
-        logo.setHeight("15rem");
-        logo.setWidth("15rem");
+        firstadd_field = new TextField();
+        firstadd_field.setPlaceholder("firstadd field");
+        firstadd_field.addClassName("focus-editor-textfield");
 
-        upload_button = new Button("Upload Key!");
-        upload_button.addClassName("mochi-button-transparent");
-        Span dropLabel = new Span("");
-        Icon dropIcon = VaadinIcon.KEY.create();
+        secondadd_field = new TextField();
+        secondadd_field.setPlaceholder("firstadd field");
+        secondadd_field.addClassName("focus-editor-textfield");
 
-        memoryBuffer = new MemoryBuffer();
-        keyUploadComponent = new Upload(memoryBuffer);
-        keyUploadComponent.setUploadButton(upload_button);
-        keyUploadComponent.setDropLabel(dropLabel);
-        keyUploadComponent.setDropLabelIcon(dropIcon);
-        keyUploadComponent.setMaxFiles(1);
-        int maxFileSizeInBytes =  1024 * 1024; // 1MB
-        keyUploadComponent.setMaxFileSize(maxFileSizeInBytes);
-        keyUploadComponent.setAcceptedFileTypes("application/mkey", ".mkey");
-        keyUploadComponent.setWidth("50%");
-        keyUploadComponent.addClassName("openvaultview-upload");
+        thirdadd_field = new TextField();
+        thirdadd_field.setPlaceholder("firstadd field");
+        thirdadd_field.addClassName("focus-editor-textfield");
 
-        keyUploadComponent.addSucceededListener(event -> {
-            // Get information about the uploaded file
-            try{
-                InputStream fileData = memoryBuffer.getInputStream();
-                String fileName = event.getFileName();
-                long contentLength = event.getContentLength();
-                String mimeType = event.getMIMEType();
+        fourthadd_field = new TextField();
+        fourthadd_field.setPlaceholder("firstadd field");
+        fourthadd_field.addClassName("focus-editor-textfield");
 
-                // Do something with the file data
-                // processFile(fileData, fileName, contentLength, mimeType);
-                Scanner s = new Scanner(fileData).useDelimiter("\\A");
-                String vault_hash = s.hasNext() ? s.next() : "";
+        firstadd_field.setVisible(false);
+        secondadd_field.setVisible(false);
+        thirdadd_field.setVisible(false);
+        fourthadd_field.setVisible(false);
 
-                VaultPasswordWindow vpw = new VaultPasswordWindow(vault_hash);
-                add(vpw.main_dialog);
-                vpw.main_dialog.open();
-                keyUploadComponent.clearFileList();
-            }catch(Exception ex){
-                MochiApplication.notificationService("Failed: "+ex.toString(),4);
+        openVault_button = new Button("Open Vault",this::setOpenVault_button);
+        openVault_button.addClassName("mochi-button-transparent");
+        openVault_button.setVisible(false);
+
+        mochi_field.addKeyPressListener(e->{
+            String value = mochi_field.getValue();
+
+            switch(value){
+                case "create":
+                {
+                    CreateVaultWindow cvw = new CreateVaultWindow();
+                    add(cvw.main_dialog);
+                    cvw.main_dialog.open();
+                    break;
+                }
+                case "open":
+                {
+                    String pin = firstadd_field.getValue();
+                    if ( MochiApplication.currentVault.vault_code.equals(pin)){
+                        openVault_button.setVisible(true);
+                    }
+                }
+                default:
+                {
+                    Database_Vault dv = new Database_Vault(MochiApplication.database);
+                    MochiApplication.currentVault = dv.getVault(value);
+                    if ( MochiApplication.currentVault != null ){
+                        firstadd_field.setPlaceholder("vault pin...");
+                        firstadd_field.setVisible(true);
+                    }
+                    else{
+                        MochiApplication.notificationService("No vault with given hash!",1);
+                    }
+                }
+
+
             }
         });
-
-        keyUploadComponent.addFileRejectedListener(event -> {
-            String errorMessage = event.getErrorMessage();
-            Notification notification = Notification.show("File is not a vault key", 5000,
-                    Notification.Position.MIDDLE);
-            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-        });
-
-        createVault_button = new Button("Create new Vault",VaadinIcon.SAFE.create(),this::setCreateVault_button);
-        createVault_button.setWidth("50%");createVault_button.addThemeVariants(ButtonVariant.LUMO_CONTRAST,ButtonVariant.LUMO_PRIMARY);
-        createVault_button.addClassName("mochi-button-dark");
-
-
-        centerLayout = new VerticalLayout();
-        centerLayout.addClassName("centerlayout");
-        centerLayout.setWidth("50%");
-        centerLayout.setHeight("70%");
-        centerLayout.setJustifyContentMode(JustifyContentMode.CENTER);
-        centerLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        centerLayout.getStyle().set("text-align", "center");
-
-        centerLayout.add(logo);
-        centerLayout.add(new H3("mochi"));
-        centerLayout.add(keyUploadComponent);
-        centerLayout.add(createVault_button);
     }
 
     /**
@@ -139,7 +137,12 @@ public class OpenVaultView extends VerticalLayout {
     void prepareLayout(){
         prepareComponents();
 
-        add(centerLayout);
+        add(mochi_field);
+        add(firstadd_field);
+        add(secondadd_field);
+        add(thirdadd_field);
+        add(fourthadd_field);
+        add(openVault_button);
 
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);
@@ -147,14 +150,9 @@ public class OpenVaultView extends VerticalLayout {
         getStyle().set("text-align", "center");
     }
 
-    /**
-     * createvault_button action
-     * @param ex
-     */
-    private void setCreateVault_button(ClickEvent ex){
-        CreateVaultWindow cvw = new CreateVaultWindow();
-        add(cvw.main_dialog);
-        cvw.main_dialog.open();
+    private void setOpenVault_button(ClickEvent ex){
+        openVault_button.getUI().ifPresent(ui ->
+                ui.navigate("/focus"));
     }
 
 }
