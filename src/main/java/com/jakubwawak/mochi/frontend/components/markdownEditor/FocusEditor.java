@@ -38,7 +38,7 @@ public class FocusEditor extends VerticalLayout {
         title_field = new TextField();
         title_field.setPlaceholder("title...");
         title_field.setWidthFull();
-        title_field.addClassName("focus-editor-textfield");
+        title_field.addClassName("openvault-input-field");
 
         note_area = new TextArea();
         note_area.setPlaceholder("note content...");

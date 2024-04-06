@@ -45,7 +45,6 @@ public class VaultNotesMenu extends MenuBar {
             MenuItem selectedItem = event.getSource();
             String noteName = selectedItem.getText();
             Database_Note dn = new Database_Note(MochiApplication.database);
-            MochiApplication.markdownEditor.reloadNote(dn.getNotebyName(noteName));
             System.out.println(selectedItem.getText());
         };
 

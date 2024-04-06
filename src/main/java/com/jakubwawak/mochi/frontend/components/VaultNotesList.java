@@ -39,7 +39,6 @@ public class VaultNotesList extends VerticalLayout {
         noteGrid.addItemClickListener(e->{
             Set<Note> selected = noteGrid.getSelectedItems();
             for(Note note : selected){
-                MochiApplication.markdownEditor.reloadNote(note);
                 break;
             }
         });

@@ -12,7 +12,6 @@ import com.jakubwawak.mochi.enitity.Mochi;
 import com.jakubwawak.mochi.enitity.Vault;
 import com.jakubwawak.mochi.frontend.components.VaultNotesList;
 import com.jakubwawak.mochi.frontend.components.VaultNotesMenu;
-import com.jakubwawak.mochi.frontend.components.markdownEditor.MarkdownEditor;
 import com.jakubwawak.mochi.maintanance.ConsoleColors;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
@@ -32,7 +31,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MochiApplication implements AppShellConfigurator {
 
 	public static String version = "v1.0.0";
-	public static String build = "mochi050423REV2";
+	public static String build = "mochi060423REV1";
 
 	public static String databaseURL = "mongodb://localhost:27017";
 
@@ -46,7 +45,6 @@ public class MochiApplication implements AppShellConfigurator {
 
 	public static VaultNotesList vaultNotesList;
 	public static VaultNotesMenu vaultNotesMenu;
-	public static MarkdownEditor markdownEditor;
 	public static int log_database_dump_flag = 1;
 
 	/**
@@ -55,7 +53,6 @@ public class MochiApplication implements AppShellConfigurator {
 	 */
 	public static void main(String[] args) {
 		showHeader();
-		MochiApplication.markdownEditor = new MarkdownEditor(null);
 		database = new Database_Connector();
 		database.setDatabase_url(databaseURL);
 		database.connect();

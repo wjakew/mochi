@@ -8,34 +8,13 @@ package com.jakubwawak.mochi.frontend.views;
 import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.backend.database.Database_Vault;
 import com.jakubwawak.mochi.enitity.Vault;
-import com.jakubwawak.mochi.frontend.windows.CreateVaultWindow;
-import com.jakubwawak.mochi.frontend.windows.VaultPasswordWindow;
-import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.H3;
-import com.vaadin.flow.component.html.H6;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.NotificationVariant;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.upload.Upload;
-import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
-import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.theme.lumo.Lumo;
-
-import java.io.InputStream;
-import java.util.Scanner;
 
 /**
  * Main application web view
@@ -50,8 +29,6 @@ public class OpenVaultView extends VerticalLayout {
     TextField secondadd_field;
     TextField thirdadd_field;
     TextField fourthadd_field;
-
-    Button openVault_button;
 
     int fieldFlag;
 
@@ -75,32 +52,28 @@ public class OpenVaultView extends VerticalLayout {
         mochi_field = new TextField();
         mochi_field.setValue("mochi");
         mochi_field.setPlaceholder("?");
-        mochi_field.addClassName("focus-editor-textfield");
+        mochi_field.addClassName("openvault-input-field");
 
         firstadd_field = new TextField();
         firstadd_field.setPlaceholder("firstadd field");
-        firstadd_field.addClassName("focus-editor-textfield");
+        firstadd_field.addClassName("openvault-input-field");
 
         secondadd_field = new TextField();
         secondadd_field.setPlaceholder("firstadd field");
-        secondadd_field.addClassName("focus-editor-textfield");
+        secondadd_field.addClassName("openvault-input-field");
 
         thirdadd_field = new TextField();
         thirdadd_field.setPlaceholder("firstadd field");
-        thirdadd_field.addClassName("focus-editor-textfield");
+        thirdadd_field.addClassName("openvault-input-field");
 
         fourthadd_field = new TextField();
         fourthadd_field.setPlaceholder("firstadd field");
-        fourthadd_field.addClassName("focus-editor-textfield");
+        fourthadd_field.addClassName("openvault-input-field");
 
         firstadd_field.setVisible(false);
         secondadd_field.setVisible(false);
         thirdadd_field.setVisible(false);
         fourthadd_field.setVisible(false);
-
-        openVault_button = new Button("Open Vault",this::setOpenVault_button);
-        openVault_button.addClassName("mochi-button-transparent");
-        openVault_button.setVisible(false);
 
         mochi_field.addKeyPressListener(e->{
             String value = mochi_field.getValue();
@@ -108,9 +81,10 @@ public class OpenVaultView extends VerticalLayout {
             switch(value){
                 case "create":
                 {
-                    CreateVaultWindow cvw = new CreateVaultWindow();
-                    add(cvw.main_dialog);
-                    cvw.main_dialog.open();
+                    firstadd_field.setPlaceholder("vault name");
+                    secondadd_field.setPlaceholder("code");
+                    thirdadd_field.setPlaceholder("pin");
+                    firstadd_field.setVisible(true);secondadd_field.setVisible(true);thirdadd_field.setVisible(true);
                     break;
                 }
                 default:
@@ -135,10 +109,40 @@ public class OpenVaultView extends VerticalLayout {
             if ( e.getKey().equals(Key.ENTER)){
                 String value = firstadd_field.getValue();
                 if ( temporaryVault.vault_code.equals(value)){
-                    openVault_button.setVisible(true);
+                    MochiApplication.currentVault = temporaryVault;
+                    firstadd_field.getUI().ifPresent(ui ->
+                            ui.navigate("/focus"));
                 }
                 else{
                     MochiApplication.notificationService("Wrong PIN for vault ("+temporaryVault.vault_id.toString()+")",1);
+                }
+            }
+        });
+
+        thirdadd_field.addKeyPressListener(e->{
+            if ( e.getKey().equals(Key.ENTER)){
+                if ( !firstadd_field.getValue().isBlank() && !secondadd_field.getValue().isBlank() && !thirdadd_field.getValue().isBlank() ){
+                    String vaultName = firstadd_field.getValue();
+                    String vaultCode = secondadd_field.getValue();
+                    String vaultPin = thirdadd_field.getValue();
+
+                    Database_Vault dv = new Database_Vault(MochiApplication.database);
+                    if ( dv.getVault(vaultCode) != null ){
+                        MochiApplication.notificationService("Cannot use hash!",1);
+                    }
+                    else{
+                        Vault vault = new Vault();
+                        vault.vault_hash = vaultCode;
+                        vault.vault_name = vaultName;
+                        vault.vault_code = vaultPin;
+                        Vault createdVault = dv.insertVault(vault);
+                        MochiApplication.currentVault = createdVault;
+                        thirdadd_field.getUI().ifPresent(ui ->
+                                ui.navigate("/focus"));
+                    }
+                }
+                else{
+                    MochiApplication.notificationService("Wrong user input!",1);
                 }
             }
         });
@@ -155,18 +159,10 @@ public class OpenVaultView extends VerticalLayout {
         add(secondadd_field);
         add(thirdadd_field);
         add(fourthadd_field);
-        add(openVault_button);
 
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         getStyle().set("text-align", "center");
     }
-
-    private void setOpenVault_button(ClickEvent ex){
-        MochiApplication.currentVault = temporaryVault;
-        openVault_button.getUI().ifPresent(ui ->
-                ui.navigate("/focus"));
-    }
-
 }

@@ -6,24 +6,11 @@ all rights reserved
 package com.jakubwawak.mochi.frontend.views;
 
 import com.jakubwawak.mochi.MochiApplication;
-import com.jakubwawak.mochi.frontend.components.VaultNotesList;
 import com.jakubwawak.mochi.frontend.components.markdownEditor.FocusEditor;
-import com.jakubwawak.mochi.frontend.components.markdownEditor.MarkdownEditor;
-import com.jakubwawak.mochi.frontend.components.mochiheader.MochiHeader;
-import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.H3;
-import com.vaadin.flow.component.html.H6;
-import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.NotificationVariant;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.theme.lumo.Lumo;
 
 /**
