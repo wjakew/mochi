@@ -20,9 +20,6 @@ import com.vaadin.flow.theme.lumo.Lumo;
 @Route("/focus")
 public class FocusView extends VerticalLayout {
 
-    FocusEditor focusEditor;
-
-
     /**
      * Constructor
      */
@@ -36,7 +33,7 @@ public class FocusView extends VerticalLayout {
      * Function for preparing components
      */
     void prepareComponents(){
-        focusEditor = new FocusEditor();
+        MochiApplication.currentEditor = new FocusEditor(null);
     }
 
     /**
@@ -45,7 +42,7 @@ public class FocusView extends VerticalLayout {
     void prepareLayout(){
         prepareComponents();
         if (MochiApplication.currentVault != null ){
-            add(focusEditor);
+            add(MochiApplication.currentEditor);
         }
         else{
             add(new Text("No vault is opened right now."));

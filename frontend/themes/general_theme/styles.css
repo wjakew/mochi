@@ -106,9 +106,19 @@
     font-family:Monospace;
     --vaadin-input-field-value-font-size: 60px;
 }
+.focus-editor-titlearea{
+    --vaadin-input-field-background: tansparent;
+    --vaadin-input-field-hover-highlight: transparent;
+    --vaadin-input-field-invalid-hover-highlight: transparent;
+    --vaadin-input-field-border-color: transparent;
+    --vaadin-input-field-value-color: white;
+    --vaadin-input-field-placeholder-color: white;
+    --vaadin-input-field-value-font-weight: 500;
+    font-family:Monospace;
+    --vaadin-input-field-value-font-size: 30px;
+}
 .focus-editor-textarea{
     --vaadin-input-field-background: tansparent;
-    --vaadin-input-field-hover-highlight: black;
     --vaadin-input-field-hover-highlight-opacity: 0;
     --vaadin-input-field-invalid-hover-highlight: purple;
     --vaadin-input-field-border-color: transparent;
@@ -160,22 +170,24 @@
     --vaadin-input-field-focused-label-color: purple;
 }
 .mochi-terminal-field{
-    background-color: transparent;
-    color: black;
-    font-family: Monospace;
+    --vaadin-input-field-background: tansparent;
+    --vaadin-input-field-hover-highlight: black;
+    --vaadin-input-field-hover-highlight-opacity: 0;
+    --vaadin-input-field-invalid-hover-highlight: purple;
+    --vaadin-input-field-border-color: transparent;
     --vaadin-input-field-value-color: white;
-    --vaadin-input-field-label-color: black;
-    --vaadin-input-field-focused-label-color: purple;
+    --vaadin-input-field-placeholder-color: white;
+    --vaadin-input-field-value-font-weight: 500;
+    font-family:Monospace;
 }
 /* window styles*/
 .mochi-dialog-window::part(overlay) {
-    border-radius: 25px;
-    border-style: solid;
-    background-color: rgba(189, 195, 199, .15);
-    backdrop-filter: blur(5px);
-    border-radius: 45px;
+    background-color: black;
     font-family: Monospace;
     color: white;
+}
+.mochi-dialog-window::part(backdrop) {
+    background-color: black;
 }
 .mochi-dialog-window H2{
     color: white;

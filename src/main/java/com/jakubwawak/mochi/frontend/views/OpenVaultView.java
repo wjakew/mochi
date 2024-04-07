@@ -8,6 +8,7 @@ package com.jakubwawak.mochi.frontend.views;
 import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.backend.database.Database_Vault;
 import com.jakubwawak.mochi.enitity.Vault;
+import com.jakubwawak.mochi.frontend.components.markdownEditor.FocusEditor;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -76,30 +77,32 @@ public class OpenVaultView extends VerticalLayout {
         fourthadd_field.setVisible(false);
 
         mochi_field.addKeyPressListener(e->{
-            String value = mochi_field.getValue();
-
-            switch(value){
-                case "create":
-                {
-                    firstadd_field.setPlaceholder("vault name");
-                    secondadd_field.setPlaceholder("code");
-                    thirdadd_field.setPlaceholder("pin");
-                    firstadd_field.setVisible(true);secondadd_field.setVisible(true);thirdadd_field.setVisible(true);
-                    break;
-                }
-                default:
-                {
-                    Database_Vault dv = new Database_Vault(MochiApplication.database);
-                    Vault vault = dv.getVault(value);
-                    if ( dv.getVault(value) != null ){
-                        temporaryVault = vault;
-                        firstadd_field.setPlaceholder("vault pin...");
-                        firstadd_field.setVisible(true);
-                        fieldFlag = 0;
+            if ( e.getKey().equals(Key.ENTER)){
+                String value = mochi_field.getValue();
+                switch(value){
+                    case "create":
+                    {
+                        firstadd_field.setPlaceholder("vault name");
+                        secondadd_field.setPlaceholder("code");
+                        thirdadd_field.setPlaceholder("pin");
+                        firstadd_field.setVisible(true);secondadd_field.setVisible(true);thirdadd_field.setVisible(true);
+                        break;
                     }
-                    else{
-                        if ( fieldFlag != 1 )
-                            MochiApplication.notificationService("No vault with given hash!",1);
+                    default:
+                    {
+                        Database_Vault dv = new Database_Vault(MochiApplication.database);
+                        Vault vault = dv.getVault(value);
+                        if ( dv.getVault(value) != null ){
+                            temporaryVault = vault;
+                            firstadd_field.setPlaceholder("vault pin...");
+                            firstadd_field.setVisible(true);
+                            firstadd_field.focus();
+                            fieldFlag = 0;
+                        }
+                        else{
+                            if ( fieldFlag != 1 )
+                                MochiApplication.notificationService("No vault with given hash!",1);
+                        }
                     }
                 }
             }
@@ -110,6 +113,7 @@ public class OpenVaultView extends VerticalLayout {
                 String value = firstadd_field.getValue();
                 if ( temporaryVault.vault_code.equals(value)){
                     MochiApplication.currentVault = temporaryVault;
+                    MochiApplication.currentEditor = new FocusEditor(null);
                     firstadd_field.getUI().ifPresent(ui ->
                             ui.navigate("/focus"));
                 }
