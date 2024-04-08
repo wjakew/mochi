@@ -27,6 +27,7 @@ public class VaultNotesList extends VerticalLayout {
         noteGrid = new Grid<>(Note.class,false);
         noteGrid.addClassName("mochi-vault-list");
         prepareLayout();
+        setWidth("30%");
     }
 
     /**
@@ -39,6 +40,7 @@ public class VaultNotesList extends VerticalLayout {
         noteGrid.addItemClickListener(e->{
             Set<Note> selected = noteGrid.getSelectedItems();
             for(Note note : selected){
+                MochiApplication.currentEditor.reload(note);
                 break;
             }
         });

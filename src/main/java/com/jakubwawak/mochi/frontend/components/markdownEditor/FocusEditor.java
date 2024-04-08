@@ -8,6 +8,7 @@ package com.jakubwawak.mochi.frontend.components.markdownEditor;
 import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.enitity.Mochi;
 import com.jakubwawak.mochi.enitity.Note;
+import com.jakubwawak.mochi.frontend.components.VaultNotesList;
 import com.vaadin.flow.component.html.H6;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -29,12 +30,15 @@ public class FocusEditor extends VerticalLayout {
 
     public FocusEditorTerminal terminal;
 
+    public VaultNotesList vnl;
+
     /**
      * Constructor
      */
     public FocusEditor(Note currentNote){
         this.currentNote = currentNote;
         terminal = new FocusEditorTerminal();
+        vnl = new VaultNotesList();
         prepareComponents();
         addClassName("mochi-md-editor");
         setSizeFull();
@@ -71,7 +75,7 @@ public class FocusEditor extends VerticalLayout {
      * Function for reloading content to given note
      * @param note
      */
-    void reload(Note note){
+    public void reload(Note note){
         title_field.setValue(currentNote.note_name);
         note_area.setValue(currentNote.note_raw);
     }
@@ -81,7 +85,19 @@ public class FocusEditor extends VerticalLayout {
      */
     void prepareLayout(){
         add(title_field);
-        add(note_area);
+
+
+        HorizontalLayout centerLayout = new HorizontalLayout();
+        centerLayout.setAlignItems(Alignment.START);
+        centerLayout.setVerticalComponentAlignment(Alignment.START);
+        centerLayout.setSizeFull();
+
+        centerLayout.add(note_area,vnl);
+
+        vnl.setVisible(false);
+        vnl.reloadGrid();
+
+        add(centerLayout);
 
         FlexLayout left_layout = new FlexLayout();
         left_layout.setSizeFull();

@@ -7,7 +7,7 @@
     --vaadin-input-field-invalid-hover-highlight: purple;
     --vaadin-input-field-border-color: transparent;
     --vaadin-input-field-value-color: white;
-    --vaadin-input-field-placeholder-color: white;
+    --vaadin-input-field-placeholder-color: gray;
     --vaadin-input-field-value-font-weight: 500;
     font-family:Monospace;
     text-algin: center;
@@ -222,6 +222,13 @@
 }
 .mochi-vault-list::part(cell){
     background-color: black;
+    border-color: black;
+    font-family: Monospace;
+}
+.mochi-vault-list{
+    background-color: black;
+    border-color: black;
+    font-family: Monospace;
 }
 .vaadin-grid-cell-content{
     background-color: black;
