@@ -113,6 +113,7 @@ public class OpenVaultView extends VerticalLayout {
                 String value = firstadd_field.getValue();
                 if ( temporaryVault.vault_code.equals(value)){
                     MochiApplication.currentVault = temporaryVault;
+                    MochiApplication.vaultUpdateService();
                     MochiApplication.currentEditor = new FocusEditor(null);
                     firstadd_field.getUI().ifPresent(ui ->
                             ui.navigate("/focus"));

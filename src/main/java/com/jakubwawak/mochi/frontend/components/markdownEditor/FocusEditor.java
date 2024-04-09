@@ -76,6 +76,7 @@ public class FocusEditor extends VerticalLayout {
      * @param note
      */
     public void reload(Note note){
+        currentNote = note;
         title_field.setValue(currentNote.note_name);
         note_area.setValue(currentNote.note_raw);
     }

@@ -75,6 +75,26 @@ public class FocusEditorTerminal extends TextField {
                             ui.navigate("/sezame"));
                     break;
                 }
+                case "clear":
+                {
+                    MochiApplication.currentEditor.note_area.setValue("");
+                    MochiApplication.currentEditor.title_field.setValue("");
+                    MochiApplication.notificationService("Editor cleared!",1);
+                    break;
+                }
+                case "update":
+                {
+                    MochiApplication.currentEditor.currentNote.note_name = MochiApplication.currentEditor.title_field.getValue();
+                    MochiApplication.currentEditor.currentNote.note_raw = MochiApplication.currentEditor.note_area.getValue();
+                    Database_Note dn = new Database_Note(MochiApplication.database);
+                    if ( dn.updateNote(MochiApplication.currentEditor.currentNote) != null ){
+                        MochiApplication.notificationService("Note ("+MochiApplication.currentEditor.currentNote.note_id.toString()+") updated!",1);
+                    }
+                    else{
+                        MochiApplication.notificationService("Note update failed!",1);
+                    }
+                    break;
+                }
                 case "list":
                 {
                     if ( MochiApplication.currentEditor.vnl.isVisible()){
@@ -85,7 +105,13 @@ public class FocusEditorTerminal extends TextField {
                     }
                     break;
                 }
+                default:
+                {
+                    MochiApplication.notificationService("Wrong terminal command ("+userInput+")",1);
+                    break;
+                }
             }
+            setValue("");
         }
         else{
             MochiApplication.notificationService("Wrong command usage!",1);
