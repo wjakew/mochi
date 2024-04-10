@@ -29,7 +29,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MochiApplication implements AppShellConfigurator {
 
 	public static String version = "v1.0.0";
-	public static String build = "mochi090423REV1";
+	public static String build = "mochi100423REV1";
 
 	public static String databaseURL = "mongodb://localhost:27017";
 
@@ -116,6 +116,7 @@ public class MochiApplication implements AppShellConfigurator {
 	public static void vaultUpdateService(){
 		try{
 			Database_Vault dv = new Database_Vault(database);
+			//currentVault = dv.updateVault(currentVault);
 			dv.updateVault(currentVault);
 			vaultManager.loadNotesObjectsToVault();
 			currentEditor.vnl.reloadGrid();

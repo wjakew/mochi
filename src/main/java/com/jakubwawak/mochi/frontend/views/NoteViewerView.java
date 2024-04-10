@@ -56,8 +56,8 @@ public class NoteViewerView extends VerticalLayout implements HasUrlParameter<St
         HorizontalLayout headerLayout = new HorizontalLayout();
 
         FlexLayout left_layout = new FlexLayout();
-        left_layout.setJustifyContentMode(JustifyContentMode.CENTER);
-        left_layout.setAlignItems(Alignment.CENTER);
+        left_layout.setJustifyContentMode(JustifyContentMode.START);
+        left_layout.setAlignItems(Alignment.START);
         left_layout.setWidth("90%");
 
         FlexLayout right_layout = new FlexLayout();
@@ -73,12 +73,11 @@ public class NoteViewerView extends VerticalLayout implements HasUrlParameter<St
         headerLayout.setVerticalComponentAlignment(Alignment.CENTER);
 
         left_layout.add(vaultreturn_button);
-        left_layout.add(new H6("Note ID: "+note.note_id));
-        left_layout.add(new H6("Date: "+note.note_creationtime));
         right_layout.add(new H6("Note Viewer"));
 
         add(headerLayout);
         add(new H1(note.getNote_name()));
+        add(new H6("Note ID: "+note.note_id+" | "+"Date: "+note.note_creationtime));
         Div editorPreview = new Div();
         MutableDataSet options = new MutableDataSet();
         Parser parser = Parser.builder(options).build();
@@ -86,8 +85,9 @@ public class NoteViewerView extends VerticalLayout implements HasUrlParameter<St
         Node document = parser.parse(note.note_raw);
         String value = "<body><div>"+renderer.render(document)+"</div></body>";
         editorPreview.getStyle().set("color","white");
+        editorPreview.setSizeFull();
         Html htmlPreview = new Html(value);
-        htmlPreview.getStyle().set("width","100%");
+        htmlPreview.getStyle().set("width","100%"); htmlPreview.getStyle().set("height","100%");
         htmlPreview.getStyle().set("text-algin","left");
         add(htmlPreview);
     }

@@ -215,10 +215,11 @@
     color: black;
     font-family: Monospace;
 }
+
 .mochi-md-editor{
-    background: transparent;
+    background: black;
     font-family: Monospace;
-    color: black;
+    color: white;
 }
 .mochi-vault-list::part(cell){
     background-color: black;

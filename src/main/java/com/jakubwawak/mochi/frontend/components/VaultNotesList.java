@@ -13,6 +13,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.renderer.LitRenderer;
 import com.vaadin.flow.data.renderer.Renderer;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class VaultNotesList extends VerticalLayout {
@@ -22,10 +23,12 @@ public class VaultNotesList extends VerticalLayout {
      */
 
     Grid<Note> noteGrid;
+    ArrayList<Note> gridContent;
 
     public VaultNotesList(){
         noteGrid = new Grid<>(Note.class,false);
         noteGrid.addClassName("mochi-vault-list");
+        gridContent = new ArrayList<>();
         prepareLayout();
         setWidth("30%");
     }
@@ -35,6 +38,7 @@ public class VaultNotesList extends VerticalLayout {
      */
     void prepareComponents(){
         noteGrid.addColumn(createCTaskRenderer()).setHeader(MochiApplication.currentVault.vault_name);
+        gridContent.addAll(MochiApplication.currentVault.vault_notes_objects);
         noteGrid.setItems(MochiApplication.currentVault.vault_notes_objects);
 
         noteGrid.addItemClickListener(e->{
@@ -50,6 +54,8 @@ public class VaultNotesList extends VerticalLayout {
      * Function for reloading grid
      */
     public void reloadGrid(){
+        gridContent.clear();
+        gridContent.addAll(MochiApplication.currentVault.vault_notes_objects);
         noteGrid.getDataProvider().refreshAll();
     }
 

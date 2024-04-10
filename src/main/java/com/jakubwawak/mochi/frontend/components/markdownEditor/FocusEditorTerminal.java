@@ -66,6 +66,41 @@ public class FocusEditorTerminal extends TextField {
                     }
                     break;
                 }
+                case "share":
+                {
+                    if ( MochiApplication.currentEditor.currentNote != null )
+                    {
+                        if ( MochiApplication.currentEditor.currentNote.isShared() ){
+                            MochiApplication.currentEditor.currentNote.share();
+                            Database_Note dn = new Database_Note(MochiApplication.database);
+                            Note note = dn.updateNote(MochiApplication.currentEditor.currentNote);
+                            if ( note != null ){
+                                MochiApplication.notificationService("Note is shared with URL ("+note.note_url+")",1);
+                                MochiApplication.vaultUpdateService();
+                                MochiApplication.currentEditor.currentNote= note;
+                                MochiApplication.currentEditor.reload(MochiApplication.currentEditor.currentNote);
+                            }
+                            else{
+                                MochiApplication.notificationService("Failed to share note, check log!",1);
+                            }
+                        }
+                        else{
+                            MochiApplication.currentEditor.currentNote.note_url = "";
+                            Database_Note dn = new Database_Note(MochiApplication.database);
+                            Note note = dn.updateNote(MochiApplication.currentEditor.currentNote);
+                            if ( note != null ){
+                                MochiApplication.notificationService("Note sharing broken, URL removed",1);
+                                MochiApplication.vaultUpdateService();
+                                MochiApplication.currentEditor.currentNote= note;
+                                MochiApplication.currentEditor.reload(MochiApplication.currentEditor.currentNote);
+                            }
+                            else{
+                                MochiApplication.notificationService("Failed to stop sharing note, check log!",1);
+                            }
+                        }
+                    }
+                    break;
+                }
                 case "close":
                 {
                     MochiApplication.vaultUpdateService();
@@ -79,7 +114,14 @@ public class FocusEditorTerminal extends TextField {
                 {
                     MochiApplication.currentEditor.note_area.setValue("");
                     MochiApplication.currentEditor.title_field.setValue("");
+                    MochiApplication.currentEditor.currentNote = null;
                     MochiApplication.notificationService("Editor cleared!",1);
+
+                    String header = MochiApplication.currentVault.vault_id.toString() + "/" + MochiApplication.currentVault.vault_name;
+                    if ( MochiApplication.currentEditor.currentNote != null ){
+                        header = header + "/" + MochiApplication.currentEditor.currentNote.note_url;
+                    }
+                    MochiApplication.currentEditor.headerString.setText(header);
                     break;
                 }
                 case "update":
@@ -88,6 +130,7 @@ public class FocusEditorTerminal extends TextField {
                     MochiApplication.currentEditor.currentNote.note_raw = MochiApplication.currentEditor.note_area.getValue();
                     Database_Note dn = new Database_Note(MochiApplication.database);
                     if ( dn.updateNote(MochiApplication.currentEditor.currentNote) != null ){
+                        MochiApplication.vaultUpdateService();
                         MochiApplication.notificationService("Note ("+MochiApplication.currentEditor.currentNote.note_id.toString()+") updated!",1);
                     }
                     else{

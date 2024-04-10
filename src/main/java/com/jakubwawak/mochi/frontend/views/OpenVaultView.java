@@ -6,7 +6,9 @@ all rights reserved
 package com.jakubwawak.mochi.frontend.views;
 
 import com.jakubwawak.mochi.MochiApplication;
+import com.jakubwawak.mochi.backend.database.Database_Note;
 import com.jakubwawak.mochi.backend.database.Database_Vault;
+import com.jakubwawak.mochi.enitity.Note;
 import com.jakubwawak.mochi.enitity.Vault;
 import com.jakubwawak.mochi.frontend.components.markdownEditor.FocusEditor;
 import com.vaadin.flow.component.Key;
@@ -53,23 +55,28 @@ public class OpenVaultView extends VerticalLayout {
         mochi_field = new TextField();
         mochi_field.setValue("mochi");
         mochi_field.setPlaceholder("?");
+        mochi_field.setMaxLength(100);
         mochi_field.addClassName("openvault-input-field");
 
         firstadd_field = new TextField();
         firstadd_field.setPlaceholder("firstadd field");
         firstadd_field.addClassName("openvault-input-field");
+        firstadd_field.setMaxLength(100);
 
         secondadd_field = new TextField();
         secondadd_field.setPlaceholder("firstadd field");
         secondadd_field.addClassName("openvault-input-field");
+        secondadd_field.setMaxLength(100);
 
         thirdadd_field = new TextField();
         thirdadd_field.setPlaceholder("firstadd field");
         thirdadd_field.addClassName("openvault-input-field");
+        thirdadd_field.setMaxLength(100);
 
         fourthadd_field = new TextField();
         fourthadd_field.setPlaceholder("firstadd field");
         fourthadd_field.addClassName("openvault-input-field");
+        fourthadd_field.setMaxLength(100);
 
         firstadd_field.setVisible(false);
         secondadd_field.setVisible(false);
@@ -92,6 +99,7 @@ public class OpenVaultView extends VerticalLayout {
                     {
                         Database_Vault dv = new Database_Vault(MochiApplication.database);
                         Vault vault = dv.getVault(value);
+                        // check if given value is vault hash
                         if ( dv.getVault(value) != null ){
                             temporaryVault = vault;
                             firstadd_field.setPlaceholder("vault pin...");
@@ -99,9 +107,16 @@ public class OpenVaultView extends VerticalLayout {
                             firstadd_field.focus();
                             fieldFlag = 0;
                         }
+                        // check if given value is a share URL
                         else{
-                            if ( fieldFlag != 1 )
-                                MochiApplication.notificationService("No vault with given hash!",1);
+                            Database_Note dn = new Database_Note(MochiApplication.database);
+                            Note sharedNote = dn.loadNote(value);
+                            if(sharedNote != null){
+                                mochi_field.getUI().ifPresent(ui->{ui.navigate("/note-viewer/"+value);});
+                            }
+                            else{
+                                MochiApplication.notificationService("No object ("+value+")",1);
+                            }
                         }
                     }
                 }

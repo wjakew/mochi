@@ -9,6 +9,7 @@ import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.enitity.Mochi;
 import com.jakubwawak.mochi.enitity.Note;
 import com.jakubwawak.mochi.frontend.components.VaultNotesList;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.html.H6;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -31,6 +32,7 @@ public class FocusEditor extends VerticalLayout {
     public FocusEditorTerminal terminal;
 
     public VaultNotesList vnl;
+    public Text headerString;
 
     /**
      * Constructor
@@ -42,9 +44,8 @@ public class FocusEditor extends VerticalLayout {
         prepareComponents();
         addClassName("mochi-md-editor");
         setSizeFull();
-        setJustifyContentMode(JustifyContentMode.CENTER);
-        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        getStyle().set("text-align", "center");
+        setJustifyContentMode(JustifyContentMode.START);
+        setDefaultHorizontalComponentAlignment(Alignment.START);
         prepareLayout();
     }
 
@@ -79,6 +80,12 @@ public class FocusEditor extends VerticalLayout {
         currentNote = note;
         title_field.setValue(currentNote.note_name);
         note_area.setValue(currentNote.note_raw);
+
+        String header = MochiApplication.currentVault.vault_id.toString() + "/" + MochiApplication.currentVault.vault_name;
+        if ( currentNote != null ){
+            header = header + "/" + currentNote.note_url;
+        }
+        headerString.setText(header);
     }
 
     /**
@@ -105,7 +112,13 @@ public class FocusEditor extends VerticalLayout {
         left_layout.setJustifyContentMode(JustifyContentMode.CENTER);
         left_layout.setAlignItems(Alignment.CENTER);
         left_layout.setWidthFull();
-        left_layout.add(new H6(MochiApplication.currentVault.vault_id.toString()));
+
+        String header = MochiApplication.currentVault.vault_id.toString() + "/" + MochiApplication.currentVault.vault_name;
+        if ( currentNote != null ){
+            header = header + "/" + currentNote.note_url;
+        }
+        headerString = new Text(header);
+        left_layout.add(headerString);
 
         FlexLayout right_layout = new FlexLayout();
         right_layout.setSizeFull();
