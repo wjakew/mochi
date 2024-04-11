@@ -8,6 +8,7 @@ package com.jakubwawak.mochi.frontend.components.markdownEditor;
 import com.jakubwawak.mochi.MochiApplication;
 import com.jakubwawak.mochi.backend.database.Database_Note;
 import com.jakubwawak.mochi.enitity.Mochi;
+import com.jakubwawak.mochi.frontend.windows.PreviewWindow;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.textfield.TextField;
@@ -99,6 +100,14 @@ public class FocusEditorTerminal extends TextField {
                             }
                         }
                     }
+                    break;
+                }
+                case "preview":
+                {
+                    MochiApplication.currentEditor.currentNote.note_raw = MochiApplication.currentEditor.note_area.getValue();
+                    PreviewWindow pw = new PreviewWindow(MochiApplication.currentEditor.currentNote);
+                    MochiApplication.currentEditor.add(pw.main_dialog);
+                    pw.main_dialog.open();
                     break;
                 }
                 case "close":

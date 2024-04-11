@@ -22,6 +22,7 @@
 .vaultview{
     background-color: black;
     color: white;
+    overflow: hidden;
 }
 .createvaultwindow{
     background: linear-gradient(-45deg, #eeaeca,#94bbe9);
@@ -220,6 +221,7 @@
     background: black;
     font-family: Monospace;
     color: white;
+    overflow: hidden;
 }
 .mochi-vault-list::part(cell){
     background-color: black;
@@ -230,6 +232,7 @@
     background-color: black;
     border-color: black;
     font-family: Monospace;
+    overflow: hidden;
 }
 .vaadin-grid-cell-content{
     background-color: black;

@@ -12,7 +12,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 /**
  * Window for logging user to the app
  */
-public class TerminalWindow {
+public class TemplateWindow {
 
     // variables for setting x and y of window
     public String width = "";
@@ -26,7 +26,7 @@ public class TerminalWindow {
     /**
      * Constructor
      */
-    public TerminalWindow(){
+    public TemplateWindow(){
         main_dialog = new Dialog();
         main_dialog.addClassName("mochi-dialog-window");
         main_layout = new VerticalLayout();

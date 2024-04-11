@@ -94,13 +94,13 @@ public class FocusEditor extends VerticalLayout {
     void prepareLayout(){
         add(title_field);
 
-
         HorizontalLayout centerLayout = new HorizontalLayout();
         centerLayout.setAlignItems(Alignment.START);
         centerLayout.setVerticalComponentAlignment(Alignment.START);
         centerLayout.setSizeFull();
 
         centerLayout.add(note_area,vnl);
+        centerLayout.getStyle().set("overflow","hidden");
 
         vnl.setVisible(false);
         vnl.reloadGrid();
