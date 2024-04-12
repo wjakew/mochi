@@ -4,6 +4,9 @@
 }
 .openvaultview{
     background-color: black;
+    overflow:hidden;
+    align: center;
+    vertical-align: baseline;
 }
 .openvault-input{
     --vaadin-input-field-background: tansparent;

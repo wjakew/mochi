@@ -48,6 +48,8 @@ public class ImportWindow {
     void prepare_components(){
         // set components
         uploadComponent = new Upload();
+        uploadComponent.setDropAllowed(true);
+
 
         uploadComponent.addSucceededListener(event -> {
             // Get information about the uploaded file
