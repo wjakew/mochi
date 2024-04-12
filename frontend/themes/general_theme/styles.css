@@ -1,3 +1,7 @@
+@font-face {
+  font-family: mochifont;
+  src: url("/Ligo.ttf");
+}
 .openvaultview{
     background-color: black;
 }
@@ -9,13 +13,13 @@
     --vaadin-input-field-value-color: white;
     --vaadin-input-field-placeholder-color: gray;
     --vaadin-input-field-value-font-weight: 500;
-    font-family:Monospace;
+    font-family:mochifont;
     text-algin: center;
 }
 .mochi-notification::part(overlay){
     background-color: black;
     color: white;
-    font-family: Monospace;
+    font-family: mochifont;
     border-style: solid;
     border-radius: 10px;
 }
@@ -28,7 +32,7 @@
     background: linear-gradient(-45deg, #eeaeca,#94bbe9);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
-    font-family: Monospace;
+    font-family: mochifont;
     color: white;
     overflow: visible;
     border-radius: 10px;
@@ -40,22 +44,22 @@
 }
 .mochi-note-view H6{
     color: white;
-    font-family: Monospace;
+    font-family: mochifont;
 }
 .mochi-note-view H1{
     color: white;
-    font-family: Monospace;
+    font-family: mochifont;
 }
 .openvaultview-upload{
     --lumo-primary-color:black;
-    font-family: Monospace;
+    font-family: mochifont;
     color: black;
 }
 .mochi-button-dark{
     background-color: black;
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
-    font-family: Monospace;
+    font-family: mochifont;
     border-radius: 25px;
     color: white;
 }
@@ -63,7 +67,7 @@
     background-color: white;
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
-    font-family: Monospace;
+    font-family: mochifont;
     border-radius: 25px;
     color: black;
 }
@@ -71,7 +75,7 @@
     background: linear-gradient(-45deg, #000000, #FFFFFF);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
-    font-family: Monospace;
+    font-family: mochifont;
     border-radius: 5px;
     margin: 25px;
     color: black;
@@ -80,7 +84,7 @@
     --lumo-primary-color:white;
     background-color: transparent;
     color: white;
-    font-family: Monospace;
+    font-family: mochifont;
     --vaadin-input-field-value-color: white;
     --vaadin-input-field-label-color: white;
     --vaadin-input-field-focused-label-color: purple;
@@ -94,7 +98,7 @@
     --vaadin-input-field-value-color: white;
     --vaadin-input-field-placeholder-color: white;
     --vaadin-input-field-value-font-weight: 500;
-    font-family:Monospace;
+    font-family:mochifont;
 }
 .openvault-input-field{
     --vaadin-input-field-background: tansparent;
@@ -104,8 +108,8 @@
     --vaadin-input-field-value-color: white;
     --vaadin-input-field-placeholder-color: white;
     --vaadin-input-field-value-font-weight: 500;
-    font-family:Monospace;
-    --vaadin-input-field-value-font-size: 60px;
+    font-family:mochifont;
+    --vaadin-input-field-value-font-size: 100px;
 }
 .focus-editor-titlearea{
     --vaadin-input-field-background: tansparent;
@@ -115,7 +119,7 @@
     --vaadin-input-field-value-color: white;
     --vaadin-input-field-placeholder-color: white;
     --vaadin-input-field-value-font-weight: 500;
-    font-family:Monospace;
+    font-family:mochifont;
     --vaadin-input-field-value-font-size: 30px;
 }
 .focus-editor-textarea{
@@ -126,7 +130,7 @@
     --vaadin-input-field-value-color: white;
     --vaadin-input-field-placeholder-color: white;
     --vaadin-input-field-value-font-weight: 500;
-    font-family:Monospace;
+    font-family:mochifont;
 }
 .focus-editor-textarea:hover{
     --vaadin-input-field-background: black;
@@ -136,20 +140,20 @@
     --vaadin-input-field-value-color: white;
     --vaadin-input-field-placeholder-color: white;
     --vaadin-input-field-value-font-weight: 500;
-    font-family:Monospace;
+    font-family:mochifont;
 }
 .mochi-header{
     border-radius: 25px;
     background-color: rgba(255, 255, 255, .15);
     backdrop-filter: blur(5px);
-    font-family: Monospace;
+    font-family: mochifont;
     color: black;
     overflow: visible;
     border-radius:10px;
     --vaadin-input-field-focused-label-color: purple;
 }
 .mochi-header-button{
-    font-family: Monospace;
+    font-family: mochifont;
     color: white;
     background-color: black;
     border-radius: 5px;
@@ -159,13 +163,13 @@
     --lumo-primary-color:white;
     background-color: transparent;
     color: white;
-    font-family: Monospace;
+    font-family: mochifont;
 }
 .mochi-input-field{
     --lumo-primary-color:white;
     background-color: transparent;
     color: white;
-    font-family: Monospace;
+    font-family: mochifont;
     --vaadin-input-field-value-color: black;
     --vaadin-input-field-label-color: white;
     --vaadin-input-field-focused-label-color: purple;
@@ -179,12 +183,12 @@
     --vaadin-input-field-value-color: white;
     --vaadin-input-field-placeholder-color: white;
     --vaadin-input-field-value-font-weight: 500;
-    font-family:Monospace;
+    font-family:mochifont;
 }
 /* window styles*/
 .mochi-dialog-window::part(overlay) {
     background-color: black;
-    font-family: Monospace;
+    font-family: mochifont;
     color: white;
 }
 .mochi-dialog-window::part(backdrop) {
@@ -194,6 +198,9 @@
     color: white;
 }
 .mochi-dialog-window H3{
+    color: white;
+}
+.mochi-dialog-window H6{
     color: white;
 }
 .mochi-dialog-window Anchor{
@@ -207,31 +214,31 @@
     font-size: 5rem;
 }
 .centerlayout H3{
-    font-family: Monospace;
+    font-family: mochifont;
     color: white;
 }
 /* editor styles*/
 .mochi-md-editor-preview{
     background: transparent;
     color: black;
-    font-family: Monospace;
+    font-family: mochifont;
 }
 
 .mochi-md-editor{
     background: black;
-    font-family: Monospace;
+    font-family: mochifont;
     color: white;
     overflow: hidden;
 }
 .mochi-vault-list::part(cell){
     background-color: black;
     border-color: black;
-    font-family: Monospace;
+    font-family: mochifont;
 }
 .mochi-vault-list{
     background-color: black;
     border-color: black;
-    font-family: Monospace;
+    font-family: mochifont;
     overflow: hidden;
 }
 .vaadin-grid-cell-content{

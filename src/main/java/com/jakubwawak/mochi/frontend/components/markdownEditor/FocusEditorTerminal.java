@@ -110,6 +110,11 @@ public class FocusEditorTerminal extends TextField {
                     pw.main_dialog.open();
                     break;
                 }
+                case "import":
+                {
+
+                    break;
+                }
                 case "close":
                 {
                     MochiApplication.vaultUpdateService();
@@ -131,6 +136,14 @@ public class FocusEditorTerminal extends TextField {
                         header = header + "/" + MochiApplication.currentEditor.currentNote.note_url;
                     }
                     MochiApplication.currentEditor.headerString.setText(header);
+                    break;
+                }
+                case "pink":
+                {
+                    MochiApplication.currentEditor.title_field.getStyle().set("--vaadin-input-field-value-color","pink");
+                    MochiApplication.currentEditor.title_field.getStyle().set("--vaadin-input-field-placeholder-color","pink");
+                    MochiApplication.currentEditor.note_area.getStyle().set("--vaadin-input-field-value-color","pink");
+                    MochiApplication.currentEditor.note_area.getStyle().set("--vaadin-input-field-placeholder-color","pink");
                     break;
                 }
                 case "update":
