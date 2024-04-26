@@ -11,6 +11,7 @@ import com.jakubwawak.mochi.backend.database.Database_Vault;
 import com.jakubwawak.mochi.enitity.Note;
 import com.jakubwawak.mochi.enitity.Vault;
 import com.jakubwawak.mochi.frontend.components.markdownEditor.FocusEditor;
+import com.jakubwawak.mochi.frontend.windows.HelpWindow;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -18,6 +19,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.theme.lumo.Lumo;
+
+import java.util.ArrayList;
 
 /**
  * Main application web view
@@ -93,6 +96,17 @@ public class OpenVaultView extends VerticalLayout {
                         secondadd_field.setPlaceholder("code");
                         thirdadd_field.setPlaceholder("pin");
                         firstadd_field.setVisible(true);secondadd_field.setVisible(true);thirdadd_field.setVisible(true);
+                        break;
+                    }
+                    case "help":
+                    {
+                        ArrayList<String> helpContent = new ArrayList<>();
+                        helpContent.add("create - creates new vault");
+                        helpContent.add("other input - code for your personal vault");
+                        HelpWindow hw = new HelpWindow("mochi help",helpContent);
+                        add(hw.main_dialog);
+                        hw.main_dialog.open();
+                        mochi_field.setValue("");
                         break;
                     }
                     default:

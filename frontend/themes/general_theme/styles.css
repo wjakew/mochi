@@ -134,6 +134,11 @@
     --vaadin-input-field-placeholder-color: white;
     --vaadin-input-field-value-font-weight: 500;
     font-family:mochifont;
+    color: white;
+}
+.focus-editor-textarea[readonly]{
+    --lumo-disabled-text-color: white;
+    color: white;
 }
 .focus-editor-textarea:hover{
     --vaadin-input-field-background: black;
@@ -193,18 +198,27 @@
     background-color: black;
     font-family: mochifont;
     color: white;
+    border-style: solid;
+    border-color: white;
 }
 .mochi-dialog-window::part(backdrop) {
     background-color: black;
 }
+.mochi-dialog-window H1{
+    color: white;
+    font-family: mochifont;
+}
 .mochi-dialog-window H2{
     color: white;
+    font-family: mochifont;
 }
 .mochi-dialog-window H3{
     color: white;
+    font-family: mochifont;
 }
 .mochi-dialog-window H6{
     color: white;
+    font-family: mochifont;
 }
 .mochi-dialog-window Anchor{
     color: white;
