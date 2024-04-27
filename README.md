@@ -1,7 +1,15 @@
 # Mochi
+current build / version : mochi270423REV1<br>
 Web application for anonymously creating vaults for storing notes.
-### Created with Java and Vaadin
+### Technology used
+- Java 17
+- Vaadin Framework
+- SpringBoot
+- MongoDB
 
+### License
+Apache 2.0
+Feel free to fork / reuse - open source!
 ## Core functionality
 
 The basic functionality of the application is to create anonymized safes for storing notes. You can go to the safe
@@ -31,16 +39,28 @@ Mochi contains sharing feature that allows users to create public URL links to p
 their notes.
 
 #### OpenVaultView - endpoint / or /sezame
+![screenshot1]("https://github.com/wjakew/mochi/blob/master/readme_resources/screenshot1.png")<br>
 View for logging to the vault or creating vaults:<br>
         - create - creates the vault<br>
         - help - shows component with help information<br>
         **or**<br>
         **insert vault code or shared URL to the note to open**
 #### FocusView - endpoint /focus 
+![screenshot2]("https://github.com/wjakew/mochi/blob/master/readme_resources/screenshot2.png")<br>
 View for editing notes stored in vault or creating new ones.<br>
-Use terminal documentation for checking commands
+Use terminal documentation for checking commands:<br>
+- save - saves current note as new one
+- share - creates the sharing URL - visible next to noteID in the left corner
+- preview - shows screen with parsed .md data
+- pink - changes UI to pink color
+- close - closes and updates vault
+- clear - clears the editor
+- update - updates current note
+- list - show / hide the note list 
+
 
 #### NoteViewerView - endpoint /note-viewer
+![screenshot3]("https://github.com/wjakew/mochi/blob/master/readme_resources/screenshot3.png")<br>
 View for showing shared notes by user.
 
 #### Deployment
