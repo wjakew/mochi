@@ -12,7 +12,7 @@
     --vaadin-input-field-background: tansparent;
     --vaadin-input-field-hover-highlight: transparent;
     --vaadin-input-field-invalid-hover-highlight: purple;
-    --vaadin-input-field-border-color: transparent;
+    --vaadin-input-field-border-color: purple;
     --vaadin-input-field-value-color: white;
     --vaadin-input-field-placeholder-color: gray;
     --vaadin-input-field-value-font-weight: 500;
@@ -139,6 +139,11 @@
 .focus-editor-textarea[readonly]{
     --lumo-disabled-text-color: white;
     color: white;
+}
+.focus-editor-textarea:disabled{
+    opacity: 0;
+    color: white;
+    background-color: white;
 }
 .focus-editor-textarea:hover{
     --vaadin-input-field-background: black;

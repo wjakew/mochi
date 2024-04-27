@@ -59,7 +59,7 @@ public class HelpWindow {
             windowContent  = windowContent + line + "\n";
         }
         messageContent_area.setValue(windowContent);
-        messageContent_area.setReadOnly(true);
+        messageContent_area.setEnabled(true);
     }
 
     /**
